@@ -1,0 +1,11 @@
+<%= form_tag searches_path, :method => 'get' do %>
+  <%= text_field_tag :search, params[:search], :id => 'search_field' %>
+  <%= submit_tag "Search", :name => nil %> 
+<% end %> 
+
+
+<h1>Reports</h1>
+<% @manifest_reports.each do |report| %>
+  <%= report.truck.plate %>
+  <%= report.destination %>
+<% end %>

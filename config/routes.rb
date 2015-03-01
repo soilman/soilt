@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
-  resources :companies
+  
+  root 'manifest_reports#index'
+  get '/search' => 'trucks#search', as: :searches
 
-  resources :trucks
+  resources :companies do 
+    resources :trucks
+  end
 
-  resources :users
-
+  resources :users do 
+    resources :manifest_reports
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
