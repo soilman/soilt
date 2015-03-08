@@ -1,4 +1,6 @@
-<h3><%= @truck.plate %></h3>
+<h3><%= @truck.plate %> | <%= link_to "Edit Truck", edit_truck_path(@truck) %> </h3>
+
+<%= %>
 
 <%= form_for @manifest_report, url: user_manifest_reports_path(@user) do |f| %>
     <%= f.label(:date) %>
@@ -9,20 +11,16 @@
   </p>
   <p>
     <%= f.label(:time_out) %>
-    <%= f.time_select(:time_out, default: Time.now + 5.minutes, ampm: true, :ignore_date => true) %>
+    <%= f.time_select(:time_out, default: Time.now + 8.minutes, ampm: true, :ignore_date => true) %>
   </p>  
-  <p>
-    <%= f.label(:manifest_number) %>
-    <% manifest_number =  ManifestReport.all.size == 0 ? 1 : (ManifestReport.last.manifest_number + 1)%>
-    <%= f.text_field(:manifest_number, value: manifest_number )%>
-  </p>
   <p>
     <%= f.label(:plate, "Plate Number") %>
     <%= f.text_field(:plate, value: @truck.plate)%>
   </p>
   <p>
-    <%= f.label(:cell) %>
-    <%= f.text_field(:cell)%>
+    <%= f.label(:manifest_number) %>
+    <% manifest_number =  ManifestReport.all.size == 0 ? 1 : (ManifestReport.last.manifest_number + 1)%>
+    <%= f.text_field(:manifest_number, value: manifest_number )%>
   </p>
   <p>
     <%= f.label(:company, "Hauler Name") %>
@@ -33,8 +31,12 @@
     <%= f.text_field(:truck_number, value: @truck.number)%>
   </p>
   <p>
+    <%= f.label(:cell) %>
+    <%= f.text_field(:cell)%>
+  </p>
+  <p>
     <%= f.label(:destination) %>
-    <%= f.text_field(:destination)%>
+    <%= f.select :destination, options_for_select(Facility.all.map(&:name))%>
   </p>
   <%= f.hidden_field :truck_id, :value => @truck.id %>
   <%= f.submit 'Create Report', :class => 'btn btn-cta btn-cta-tertiary' %>

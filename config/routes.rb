@@ -1,12 +1,19 @@
 Rails.application.routes.draw do
   
+  resources :facilities
+
   root 'manifest_reports#index'
   get '/search' => 'trucks#search', as: :searches
 
   resources :companies do 
-    resources :trucks
+    resources :trucks, only: [:show]
   end
 
+  get '/trucks/new' => 'trucks#new', as: :new_truck
+  get '/trucks/:id/edit' => 'trucks#edit', as: :edit_truck
+  post '/trucks' => 'trucks#create', as: :trucks
+  patch 'trucks/:id' => 'trucks#update', as: :update_truck
+  
   resources :users do 
     resources :manifest_reports, only: [:new, :create, :show]
   end
