@@ -6,6 +6,7 @@ class TrucksController < ApplicationController
     # if current_user
     #   @user = User.find(session[:user_id])
     # end
+    @user = User.first
   end
 
   def search

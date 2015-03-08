@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301205610) do
+ActiveRecord::Schema.define(version: 20150301235328) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -22,13 +22,17 @@ ActiveRecord::Schema.define(version: 20150301205610) do
   create_table "manifest_reports", force: true do |t|
     t.integer  "user_id"
     t.integer  "truck_id"
-    t.datetime "time_in"
-    t.datetime "time_out"
+    t.time     "time_in"
+    t.time     "time_out"
     t.integer  "manifest_number"
     t.string   "cell"
     t.string   "destination"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "plate"
+    t.integer  "truck_number"
+    t.string   "company"
+    t.date     "date"
   end
 
   create_table "trucks", force: true do |t|

@@ -17,7 +17,7 @@ class ManifestReportsController < ApplicationController
     if @manifest_report.errors.any?
       redirect_to truck_path(@truck), notice: "Please complete all fields."
     else
-      redirect_to manifest_reports_path
+      redirect_to root_path
     end
   end
 
@@ -31,7 +31,11 @@ class ManifestReportsController < ApplicationController
         :time_out, 
         :manifest_number, 
         :cell, 
-        :destination
+        :destination,
+        :plate,
+        :truck_number,
+        :company,
+        :date
       )
     end
 

@@ -1,11 +1,33 @@
 <%= form_tag searches_path, :method => 'get' do %>
   <%= text_field_tag :search, params[:search], :id => 'search_field' %>
-  <%= submit_tag "Search", :name => nil %> 
+  <%= submit_tag "Create Report", :name => nil %> 
 <% end %> 
 
 
 <h1>Reports</h1>
-<% @manifest_reports.each do |report| %>
-  <%= report.truck.plate %>
-  <%= report.destination %>
-<% end %>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Time In</th>
+    <th>Time Out</th>
+    <th>Manifest Number</th>
+    <th>Plate Number</th>
+    <th>Cell</th>
+    <th>Hauler Name</th>
+    <th>Truck Number</th>
+    <th>Destination</th>
+  </tr> 
+  <% @manifest_reports.each do |report| %>
+    <tr>
+      <td><%= report.date %></td>
+      <td><%= report.time_in.strftime("%I:%M%p") %></td>
+      <td><%= report.time_out.strftime("%I:%M%p") %></td>
+      <td><%= report.manifest_number %></td>
+      <td><%= report.plate %></td>
+      <td><%= report.cell %></td>
+      <td><%= report.company %></td>
+      <td><%= report.truck_number %></td>
+      <td><%= report.destination %><td>
+    </tr>
+  <% end %>
+</table>
