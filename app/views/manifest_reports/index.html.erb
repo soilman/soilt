@@ -7,6 +7,7 @@
 <h1>Reports</h1>
 <table>
   <tr>
+    <th>Project Name</th>
     <th>Date</th>
     <th>Time In</th>
     <th>Time Out</th>
@@ -19,6 +20,7 @@
   </tr> 
   <% @manifest_reports.each do |report| %>
     <tr>
+      <td><%= report.project_name %></td>
       <td><%= report.date %></td>
       <td><%= report.time_in.strftime("%I:%M%p") %></td>
       <td><%= report.time_out.strftime("%I:%M%p") %></td>
@@ -28,6 +30,7 @@
       <td><%= report.company %></td>
       <td><%= report.truck_number %></td>
       <td><%= report.destination %><td>
+      <%= link_to "Edit", edit_user_manifest_report_path(@user, report) %>
     </tr>
   <% end %>
 </table>

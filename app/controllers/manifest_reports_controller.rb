@@ -6,6 +6,7 @@ class ManifestReportsController < ApplicationController
   end
 
   def index
+    @user = User.first
     @manifest_reports = ManifestReport.all
   end
 
@@ -19,6 +20,12 @@ class ManifestReportsController < ApplicationController
     else
       redirect_to root_path
     end
+  end
+
+  def edit
+    @truck = Truck.find(params[:id])
+    @companies = Company.all
+    @manifest_report.find(params[:id])
   end
 
   private

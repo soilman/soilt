@@ -27,7 +27,8 @@ class TrucksController < ApplicationController
     if @truck.errors.any?
       render 'edit', notice: "Error. Please try again."
     else
-      redirect_to company_truck_path(company, @truck)
+      redirect_to root_path
+      # redirect_to company_truck_path(company, @truck)
     end
 
   end

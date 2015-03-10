@@ -3,8 +3,14 @@
 <%= %>
 
 <%= form_for @manifest_report, url: user_manifest_reports_path(@user) do |f| %>
+  <p>
+    <%= f.label(:project_name, "Project Name") %>
+    <%= f.text_field(:project_name)%>
+  </p>
+  <p>
     <%= f.label(:date) %>
     <%= f.date_select(:date, default: Date.today) %>
+  </p>
   <p>
     <%= f.label(:time_in) %>
     <%= f.time_select(:time_in, default: Time.now, ampm: true, :ignore_date => true) %>

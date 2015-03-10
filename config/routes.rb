@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   get '/trucks/:id/edit' => 'trucks#edit', as: :edit_truck
   post '/trucks' => 'trucks#create', as: :trucks
   patch 'trucks/:id' => 'trucks#update', as: :update_truck
-  
+  get '/users/:user_id/manifest_reports/:id/edit' => 'manifest_reports#edit', as: :edit_user_manifest_report
+  patch '/users/:user_id/manifest_reports/:id/' => 'manifest_reports#update', as: :update_user_manifest_report
   resources :users do 
     resources :manifest_reports, only: [:new, :create, :show]
   end
