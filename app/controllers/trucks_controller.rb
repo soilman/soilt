@@ -1,5 +1,6 @@
 class TrucksController < ApplicationController
-
+  before_action :authenticate_user!
+  
   def new
     @truck = Truck.new
     @companies = Company.all
@@ -21,6 +22,7 @@ class TrucksController < ApplicationController
   end
 
   def update
+    binding.pry
     @truck = Truck.find(params[:id])
     @truck.update_attributes(truck_params)
     company = Company.find(params[:truck][:company_id])

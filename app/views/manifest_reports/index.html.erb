@@ -20,6 +20,7 @@
   </tr> 
   <% @manifest_reports.each do |report| %>
     <tr>
+      <% binding.pry %>
       <td><%= report.project_name %></td>
       <td><%= report.date %></td>
       <td><%= report.time_in.strftime("%I:%M%p") %></td>
@@ -30,7 +31,7 @@
       <td><%= report.company %></td>
       <td><%= report.truck_number %></td>
       <td><%= report.destination %><td>
-      <%= link_to "Edit", edit_user_manifest_report_path(@user, report) %>
+      <%= link_to "Edit", edit_user_manifest_report_path(report.user, report) %>
     </tr>
   <% end %>
 </table>
