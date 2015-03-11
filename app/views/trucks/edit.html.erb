@@ -1,0 +1,14 @@
+<%= form_for @truck, url: update_truck_path(@truck) do |f| %>
+    <%= f.label(:plate) %>
+    <%= f.text_field(:plate, value: @truck.plate || params[:query]) %>
+  <p>
+    <%= f.label(:company_id) %>
+    <%= f.select :company_id, options_from_collection_for_select(@companies, "id", "name", selected: @truck.company.try(:id)) %>
+  </p>
+  <p>
+    <%= f.label(:number) %>
+    <%= f.text_field(:number, value: @truck.number) %>
+  </p>
+    <%= f.submit 'Submit', :class => 'btn btn-cta btn-cta-tertiary' %>
+<% end %>
+

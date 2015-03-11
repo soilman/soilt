@@ -1,0 +1,46 @@
+<%= form_for @manifest_report, url: update_user_manifest_report_path(@user, @manifest_report) do |f| %>
+  <p>
+    <%= f.label(:project_name, "Project Name") %>
+    <%= f.text_field(:project_name, default: @manifest_report.project_name) %>
+  </p>
+  <p>
+    <%= f.label(:date) %>
+    <%= f.date_select(:date, default: @manifest_report.date) %>
+  </p>
+  <p>
+    <%= f.label(:time_in) %>
+    <%= f.time_select(:time_in, default: @manifest_report.time_in, ampm: true, :ignore_date => true) %>
+  </p>
+  <p>
+    <%= f.label(:time_out) %>
+    <%= f.time_select(:time_out, default: @manifest_report.time_out, ampm: true, :ignore_date => true) %>
+  </p>  
+  <p>
+    <%= f.label(:plate, "Plate Number") %>
+    <%= f.text_field(:plate, value: @manifest_report.plate)%>
+  </p>
+  <p>
+    <%= f.label(:manifest_number) %>
+    <% manifest_number =  @manifest_report.manifest_number%>
+    <%= f.text_field(:manifest_number, value: manifest_number )%>
+  </p>
+  <p>
+    <%= f.label(:company, "Hauler Name") %>
+    <%= f.text_field(:company, value: @manifest_report.company)%>
+  </p>
+  <p>
+    <%= f.label(:truck_number) %>
+    <%= f.text_field(:truck_number, value: @manifest_report.truck_number)%>
+  </p>
+  <p>
+    <%= f.label(:cell) %>
+    <%= f.text_field(:cell)%>
+  </p>
+  <p>
+    <%= f.label(:destination) %>
+    <%= f.select :destination, options_for_select(Facility.all.map(&:name))%>
+  </p>
+  <%= f.hidden_field :truck_id, :value => @truck.id %>
+  <%= f.submit 'Create Report', :class => 'btn btn-cta btn-cta-tertiary' %>
+<% end %>
+
