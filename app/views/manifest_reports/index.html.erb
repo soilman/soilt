@@ -1,7 +1,15 @@
 <%= form_tag searches_path, :method => 'get' do %>
-  <%= text_field_tag :search, params[:search], :id => 'search_field' %>
+  <%= autocomplete_field_tag :search, params[:search], autocomplete_truck_plate_manifest_reports_path, {class: "search-query", placeholder: "JHG876", type: "search"} %> 
+  <%#= text_field_tag :search, params[:search], :id => 'search_field' %>
   <%= submit_tag "Create Report", :name => nil %> 
 <% end %> 
+
+<script>
+  $('input').typeahead({
+    name: 'people',
+    local: ['Elaine', 'Column', 'Kirsty', 'Chris Elder']
+  });
+</script>
 
 
 <h1>Reports</h1>

@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   get '/users/:user_id/manifest_reports/:id/edit' => 'manifest_reports#edit', as: :edit_user_manifest_report
   patch '/users/:user_id/manifest_reports/:id' => 'manifest_reports#update', as: :update_user_manifest_report 
 
+  # resources :manifest_reports do 
+  #   get :autocomplete_truck_plate, on: :collection
+  # end  
+
+  get '/manifest_reports/autocomplete_truck_plate' => 'manifest_reports#autocomplete_truck_plate', as: :autocomplete_truck_plate_manifest_reports
 
   resources :users do 
     resources :manifest_reports, only: [:new, :create, :show]

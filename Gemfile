@@ -28,6 +28,10 @@ gem 'spring', '>= 1.3.2',       group: :development
 gem 'pry'
 gem 'devise', git: 'https://github.com/plataformatec/devise'
 gem 'jquery-ui-rails'
+gem 'rails4-autocomplete'
+gem "twitter-bootstrap-rails"
+gem 'simple_form'
+gem 'twitter-typeahead-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

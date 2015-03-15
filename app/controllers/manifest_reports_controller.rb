@@ -1,4 +1,5 @@
 class ManifestReportsController < ApplicationController
+  autocomplete :truck, :plate
   before_action :authenticate_user!
 
   def new
