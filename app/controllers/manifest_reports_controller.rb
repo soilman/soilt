@@ -31,7 +31,6 @@ class ManifestReportsController < ApplicationController
   end
 
   def update
-    binding.pry
     @manifest_report = ManifestReport.find(params[:id])
     @manifest_report.update_attributes(manifest_report_params)
     if @manifest_report.errors.any?

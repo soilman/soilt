@@ -20,7 +20,6 @@
   </tr> 
   <% @manifest_reports.each do |report| %>
     <tr>
-      <% binding.pry %>
       <td><%= report.project_name %></td>
       <td><%= report.date %></td>
       <td><%= report.time_in.strftime("%I:%M%p") %></td>
