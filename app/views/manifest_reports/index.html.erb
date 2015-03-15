@@ -1,7 +1,8 @@
 <%= form_tag searches_path, :method => 'get' do %>
-  <%= autocomplete_field_tag :search, params[:search], autocomplete_truck_plate_manifest_reports_path, {class: "search-query", placeholder: "JHG876", type: "search"} %> 
+  <%= autocomplete_field_tag :search, params[:search], autocomplete_truck_plate_manifest_reports_path, 
+  {class: "search-query", placeholder: "JHG876", type: "search"} %> 
   <%#= text_field_tag :search, params[:search], :id => 'search_field' %>
-  <%= submit_tag "Create Report", :name => nil %> 
+  <%= submit_tag "Create Report", :name => nil, :class => "search-me", :style => "display: none;" %> 
 <% end %> 
 
 <script>
@@ -42,3 +43,17 @@
     </tr>
   <% end %>
 </table>
+
+
+
+
+<script type="text/javascript">
+
+$( document ).ready(function() { 
+  $('.search-query').bind('railsAutocomplete.select', function(event, data){
+  $('.search-me').trigger('click');
+  });
+});
+
+
+</script>
