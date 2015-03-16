@@ -18,3 +18,14 @@
 //= require autocomplete-rails
 //= require_tree .
 //= require twitter/typeahead
+
+
+
+
+$( document ).ready(function() { 
+  $('.search-query').bind('railsAutocomplete.select', function(event, data){
+  $('.search-me').trigger('click');
+  });
+});
+
+

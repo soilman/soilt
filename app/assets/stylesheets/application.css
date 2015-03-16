@@ -14,3 +14,24 @@
  *= require_self
  *= require jquery-ui
  */
+
+/*.container.nav-collapse {
+  margin-top: 14px;   
+}
+
+.brand {
+  margin-top: 8px;
+}
+*/
+body {
+  margin-top: 75px;
+
+}
+
+.search-query {
+  margin-left: -8%;
+}
+
+
+
+

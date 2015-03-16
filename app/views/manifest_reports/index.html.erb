@@ -1,16 +1,5 @@
-<%= form_tag searches_path, :method => 'get' do %>
-  <%= autocomplete_field_tag :search, params[:search], autocomplete_truck_plate_manifest_reports_path, 
-  {class: "search-query", placeholder: "JHG876", type: "search"} %> 
-  <%#= text_field_tag :search, params[:search], :id => 'search_field' %>
-  <%= submit_tag "Create Report", :name => nil, :class => "search-me", :style => "display: none;" %> 
-<% end %> 
 
-<script>
-  $('input').typeahead({
-    name: 'people',
-    local: ['Elaine', 'Column', 'Kirsty', 'Chris Elder']
-  });
-</script>
+
 
 
 <h1>Reports</h1>
@@ -47,13 +36,3 @@
 
 
 
-<script type="text/javascript">
-
-$( document ).ready(function() { 
-  $('.search-query').bind('railsAutocomplete.select', function(event, data){
-  $('.search-me').trigger('click');
-  });
-});
-
-
-</script>
