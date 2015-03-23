@@ -1,0 +1,19 @@
+<div class="span3">
+  <% if user_signed_in? %>
+    <div class="well sidebar-nav">
+      <h3 class="plate-search-header">Create Report</h3>
+      <ul class="nav nav-list">
+        <li class="nav-header plate-search">Enter a plate number</li>
+        <%= form_tag searches_path, :method => 'get' do %>
+          <%= autocomplete_field_tag :search, params[:search], autocomplete_truck_plate_manifest_reports_path,
+          {class: "search-query", placeholder: "JHG876", type: "search"} %> 
+          <%#= text_field_tag :search, params[:search], :id => 'search_field' %>
+          <%= submit_tag "Create Report", :name => nil, :class => "search-me", :style => "display: none;" %> 
+        <% end %>
+        <%= link_to "javascript:void(0)" do %>
+          <button class="fa fa-list-alt btn btn-info", id='export-button'>Export</button>
+        <% end %>    
+      </ul>
+    </div><!--/.well -->
+  <% end %>
+</div><!--/span-->
