@@ -45,13 +45,17 @@ class ManifestReportsController < ApplicationController
   end  
 
   def export
-    binding.pry
-    ids = params['exports'].map {|k, v| k.to_i if v == '1'}.compact
-    @reports = ManifestReport.where(id: ids)
-    respond_to do |format| 
-       format.xlsx {render xlsx: 'export',filename: "invoice_#{Date.today.to_s}.xlsx"}
+    if params['exports']
+      binding.pry
+      ids = params['exports'].map {|k, v| k.to_i if v == '1'}.compact
+      @reports = ManifestReport.where(id: ids)
+      respond_to do |format| 
+        format.xlsx {render xlsx: 'export',filename: "invoice_#{Date.today.to_s}.xlsx"}
+      end
+    else
+      flash[:error] = "Please select a report to export."
+      redirect_to root_path 
     end
-  
   end
 
   private

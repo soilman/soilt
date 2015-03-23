@@ -30,7 +30,10 @@ $( document ).ready(function() {
 });
 
 $(document).ready(function() {
-  $('#export-button').on('click', function() { $('#export-form').submit(); });
+  $('#export-button').on('click', function() { 
+    $('#export-form').submit(); 
+    $('[id^=exports]').removeAttr('checked');
+  });
 });
 
 
