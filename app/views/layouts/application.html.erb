@@ -46,10 +46,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">SoilMover</a>
+          <%= link_to "Earth Efficient Access", root_path, class: 'brand' %>
           <div class="container nav-collapse">
             <ul class="nav">
-           
+            <% if user_signed_in? %>  
+              <li> <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %></li>
+            <% end %>
             
             </ul>
           </div><!--/.nav-collapse -->
@@ -63,24 +65,11 @@
             <%= bootstrap_flash %>
             <%= yield %>
           </div>
-          <div class="span3">
-            <div class="well sidebar-nav">
-              <h3>Create Report</h3>
-              <ul class="nav nav-list">
-                <li class="nav-header">Enter a plate number</li>
-                   <%= form_tag searches_path, :method => 'get' do %>
-                  <%= autocomplete_field_tag :search, params[:search], autocomplete_truck_plate_manifest_reports_path,
-                  {class: "search-query", placeholder: "JHG876", type: "search"} %> 
-                  <%#= text_field_tag :search, params[:search], :id => 'search_field' %>
-                  <%= submit_tag "Create Report", :name => nil, :class => "search-me", :style => "display: none;" %> 
-              <% end %> 
-              </ul>
-            </div><!--/.well -->
-          </div><!--/span-->
+          <%= render 'layouts/sidebar' %>
         </div><!--/row-->
 
       <footer>
-        <p>&copy; Company 2015</p>
+        <p>&copy; Earth Efficient Access <%= Date.today.year %></p>
       </footer>
 
     </div> <!-- /container -->

@@ -1,20 +1,20 @@
 <%= form_for @manifest_report, url: update_user_manifest_report_path(@user, @manifest_report) do |f| %>
   <p>
     <%= f.label(:project_name, "Project Name") %>
-    <%= f.text_field(:project_name, default: @manifest_report.project_name) %>
+    <%= f.autocomplete_field :project_name, autocomplete_project_name_manifest_reports_path, value: @manifest_report.project_name ,:id_element => '#project_id'%>
   </p>
-  <p>
+   <p>
     <%= f.label(:date) %>
-    <%= f.date_select(:date, default: @manifest_report.date) %>
+    <%= f.date_select(:date, { default: @manifest_report.date }, { class: "datetime-select" }) %>
   </p>
   <p>
     <%= f.label(:time_in) %>
-    <%= f.time_select(:time_in, default: @manifest_report.time_in, ampm: true, :ignore_date => true) %>
+    <%= f.time_select(:time_in, { default: @manifest_report.time_in }, { ampm: true, :ignore_date => true, class: "datetime-select" }) %>
   </p>
   <p>
     <%= f.label(:time_out) %>
-    <%= f.time_select(:time_out, default: @manifest_report.time_out, ampm: true, :ignore_date => true) %>
-  </p>  
+    <%= f.time_select(:time_out, { default: @manifest_report.time_out }, { ampm: true, :ignore_date => true, class: "datetime-select" }) %>
+  </p> 
   <p>
     <%= f.label(:plate, "Plate Number") %>
     <%= f.text_field(:plate, value: @manifest_report.plate)%>
@@ -34,13 +34,16 @@
   </p>
   <p>
     <%= f.label(:cell) %>
-    <%= f.text_field(:cell)%>
+    <%= f.text_field(:cell, value: @manifest_report.cell)%>
   </p>
   <p>
-    <%= f.label(:destination) %>
-    <%= f.select :destination, options_for_select(Facility.all.map(&:name))%>
+  <p>
+    <%= f.label(:facility_name) %>
+    <%= f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @manifest_report.facility_name, :id_element => '#facility_id'%>
   </p>
   <%= f.hidden_field :truck_id, :value => @truck.id %>
+  <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
+  <%= f.hidden_field(:project_id, {id: 'project_id'}) %>
   <%= f.submit 'Create Report', :class => 'btn btn-cta btn-cta-tertiary' %>
 <% end %>
 

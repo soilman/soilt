@@ -18,6 +18,7 @@
 //= require autocomplete-rails
 //= require_tree .
 //= require twitter/typeahead
+//= require jquery-tablesorter
 
 
 
@@ -26,6 +27,10 @@ $( document ).ready(function() {
   $('.search-query').bind('railsAutocomplete.select', function(event, data){
   $('.search-me').trigger('click');
   });
+});
+
+$(document).ready(function() {
+  $('#export-button').on('click', function() { $('#export-form').submit(); });
 });
 
 

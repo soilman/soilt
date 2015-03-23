@@ -1,6 +1,7 @@
 class ManifestReportsController < ApplicationController
   autocomplete :truck, :plate
-  autocomplete :company, :name
+  autocomplete :facility, :name
+  autocomplete :project, :name
   before_action :authenticate_user!
 
   def new
@@ -41,6 +42,16 @@ class ManifestReportsController < ApplicationController
       redirect_to root_path
       # redirect_to company_truck_path(company, @truck)
     end
+  end  
+
+  def export
+    binding.pry
+    ids = params['exports'].map {|k, v| k.to_i if v == '1'}.compact
+    @reports = ManifestReport.where(id: ids)
+    respond_to do |format| 
+       format.xlsx {render xlsx: 'export',filename: "invoice_#{Date.today.to_s}.xlsx"}
+    end
+  
   end
 
   private
@@ -49,12 +60,14 @@ class ManifestReportsController < ApplicationController
       params.require(:manifest_report).permit(
         :project_name,
         :user_id, 
-        :truck_id, 
+        :truck_id,
+        :facility_id,
+        :project_id, 
         :time_in, 
         :time_out, 
         :manifest_number, 
         :cell, 
-        :destination,
+        :facility_name,
         :plate,
         :truck_number,
         :company,

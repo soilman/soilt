@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   devise_for :users
-  resources :facilities
 
   root 'manifest_reports#index'
   get '/search' => 'trucks#search', as: :searches
@@ -22,10 +21,18 @@ Rails.application.routes.draw do
   # end  
 
   get '/manifest_reports/autocomplete_truck_plate' => 'manifest_reports#autocomplete_truck_plate', as: :autocomplete_truck_plate_manifest_reports
+  get 'manifest_reports/autocomplete_facility_name' => 'manifest_reports#autocomplete_facility_name', as: :autocomplete_facility_name_manifest_reports
+  get 'manifest_reports/autocomplete_project_name' => 'manifest_reports#autocomplete_project_name', as: :autocomplete_project_name_manifest_reports
+
+  get 'manifest_reports/export' => 'manifest_reports#export', as: :export_manifest_report
+  post 'manifest_reports/export' => 'manifest_reports#export', as: :load_manifest_report
 
   resources :users do 
     resources :manifest_reports, only: [:new, :create, :show]
   end
+
+  resources :projects, only: [:new, :edit, :create]
+  resources :facilities, only: [:new, :edit, :create]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -32,6 +32,9 @@ gem 'rails4-autocomplete'
 gem "twitter-bootstrap-rails"
 gem 'simple_form'
 gem 'twitter-typeahead-rails'
+gem 'jquery-tablesorter'
+gem 'acts_as_xlsx'
+gem 'axlsx_rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

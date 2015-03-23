@@ -13,25 +13,51 @@
  *= require_tree .
  *= require_self
  *= require jquery-ui
+ *= require  jquery-tablesorter/theme.blue
  */
 
-/*.container.nav-collapse {
+.container.nav-collapse {
   margin-top: 14px;   
 }
 
 .brand {
   margin-top: 8px;
 }
-*/
+
 body {
   margin-top: 75px;
-
 }
 
 .search-query {
-  margin-left: -8%;
+  margin-left: -20%;
+  margin-top: 20%;
+  max-width: 90%;
 }
 
+.datetime-select {
+  max-width: 15%;
+}
 
+.less-width {
+  max-width: 75%
+}
 
+.sidebar-nav {
+  max-width: 45%;
+  margin-left: 35%;
+}
+
+.plate-search {
+  margin-left: -13%;
+  padding: 1%;
+}
+
+.plate-search-header {
+  margin-left: 9%;
+}
+
+.export-submit{
+  margin-left: 102%;
+  margin-bottom: -11%;
+}
 
