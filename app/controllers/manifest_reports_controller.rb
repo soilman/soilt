@@ -46,9 +46,9 @@ class ManifestReportsController < ApplicationController
 
   def export
     if params['exports']
-      binding.pry
       ids = params['exports'].map {|k, v| k.to_i if v == '1'}.compact
       @reports = ManifestReport.where(id: ids)
+      flash[:success] = "Export successful."
       respond_to do |format| 
         format.xlsx {render xlsx: 'export',filename: "invoice_#{Date.today.to_s}.xlsx"}
       end
