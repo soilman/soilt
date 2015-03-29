@@ -20,8 +20,10 @@ class ManifestReportsController < ApplicationController
     @manifest_report = @user.manifest_reports.create(manifest_report_params)
 
     if @manifest_report.errors.any?
-      redirect_to truck_path(@truck), notice: "Please complete all fields."
+      flash[:error] = "Please complete all fields"
+      redirect_to truck_path(@truck)
     else
+      flash[:success] = "Report created successfully."
       redirect_to root_path
     end
   end
@@ -37,24 +39,25 @@ class ManifestReportsController < ApplicationController
     @manifest_report = ManifestReport.find(params[:id])
     @manifest_report.update_attributes(manifest_report_params)
     if @manifest_report.errors.any?
-      render 'edit', notice: "Error. Please try again."
+      flash[:error] = "Please complete all fields"
+      render 'edit'
     else
+      flash[:success] = "Report updated successfully."
       redirect_to root_path
-      # redirect_to company_truck_path(company, @truck)
     end
-  end  
+  end
 
   def export
     if params['exports']
       ids = params['exports'].map {|k, v| k.to_i if v == '1'}.compact
       @reports = ManifestReport.where(id: ids)
       flash[:success] = "Export successful."
-      respond_to do |format| 
+      respond_to do |format|
         format.xlsx {render xlsx: 'export',filename: "invoice_#{Date.today.to_s}.xlsx"}
       end
     else
       flash[:error] = "Please select a report to export."
-      redirect_to root_path 
+      redirect_to root_path
     end
   end
 
@@ -63,14 +66,14 @@ class ManifestReportsController < ApplicationController
     def manifest_report_params
       params.require(:manifest_report).permit(
         :project_name,
-        :user_id, 
+        :user_id,
         :truck_id,
         :facility_id,
-        :project_id, 
-        :time_in, 
-        :time_out, 
-        :manifest_number, 
-        :cell, 
+        :project_id,
+        :time_in,
+        :time_out,
+        :manifest_number,
+        :cell,
         :facility_name,
         :plate,
         :truck_number,

@@ -1,11 +1,11 @@
 class TrucksController < ApplicationController
   before_action :authenticate_user!
-  
+
   def new
     @truck = Truck.new
     @companies = Company.all
   end
-  
+
   def create
     @truck = Truck.create(truck_params)
     company = Company.find(params[:truck][:company_id])
@@ -22,7 +22,6 @@ class TrucksController < ApplicationController
   end
 
   def update
-    binding.pry
     @truck = Truck.find(params[:id])
     @truck.update_attributes(truck_params)
     company = Company.find(params[:truck][:company_id])
@@ -35,7 +34,7 @@ class TrucksController < ApplicationController
 
   end
 
-  def show 
+  def show
     @truck = Truck.find(params[:id])
     @manifest_report = ManifestReport.new
     # if current_user
@@ -58,9 +57,9 @@ class TrucksController < ApplicationController
 
     def truck_params
       params.require(:truck).permit(
-        :company_id, 
-        :plate, 
-        :number 
+        :company_id,
+        :plate,
+        :number
       )
     end
 

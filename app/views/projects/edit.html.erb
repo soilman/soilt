@@ -1,0 +1,7 @@
+<%= form_for @project, url: project_path do |f| %>
+    <p>
+      <%= f.label(:name) %>
+      <%= f.text_field(:name, value: @project.name, :autocomplete => :off) %>
+    </p>
+    <%= f.submit 'Submit', :class => 'btn btn-cta btn-cta-tertiary' %>
+<% end %>

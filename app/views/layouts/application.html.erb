@@ -47,14 +47,23 @@
             <span class="icon-bar"></span>
           </a>
           <%= link_to "Earth Efficient Access", root_path, class: 'brand' %>
-          <div class="container nav-collapse">
-            <ul class="nav">
-            <% if user_signed_in? %>  
-              <li> <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %></li>
-            <% end %>
-            
+
+            <ul class="nav navbar-right">
+
+                <div class="dropdown navbar-right">
+                  <% if user_signed_in? %>
+                    <button class="btn btn-default dropdown-toggle logout" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                      <%= current_user.email %>
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                      <li role="presentation"><%= link_to "Log Out", destroy_user_session_path, method: "delete" %></li>
+                    </ul>
+                  <% end %>
+                </div>
+
             </ul>
-          </div><!--/.nav-collapse -->
+
         </div>
       </div>
     </div>
