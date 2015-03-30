@@ -16,15 +16,18 @@ class ManifestReportsController < ApplicationController
 
   def create
     @user = current_user
-    @truck = params[:manifest_report][:truck_id]
-    @manifest_report = @user.manifest_reports.create(manifest_report_params)
+    truck = Truck.find(params[:manifest_report][:truck_id])
+    @manifest_report = @user.manifest_reports.build(manifest_report_params)
+    @manifest_report.plate = truck.plate
+    @manifest_report.truck_number = truck.number
+    @manifest_report.company = truck.company
 
-    if @manifest_report.errors.any?
-      flash[:error] = "Please complete all fields"
-      redirect_to truck_path(@truck)
-    else
+    if @manifest_report.save
       flash[:success] = "Report created successfully."
       redirect_to root_path
+    else
+      flash[:error] = "Please complete all fields"
+      redirect_to truck_path(truck)
     end
   end
 

@@ -1,49 +1,44 @@
-<div class="container">    
-  <div class="row">
-    <div class="col-md-8">
-      <div class="table-responsive less-width">            
-        <table id="myTable" class="table tablesorter">
-          <thead>
-          <tr>
-            <th class="header">Project Name</th>
-            <th>Date</th>
-            <th>Time In</th>
-            <th>Time Out</th>
-            <th>Manifest Number</th>
-            <th>Plate Number</th>
-            <th>Cell</th>
-            <th>Hauler Name</th>
-            <th>Truck Number</th>
-            <th>Destination</th>
-            
 
-          </tr> 
-        </thead>
-        <tbody>
-          <%= form_tag export_manifest_report_path(format: 'xlsx'), id: 'export-form' do |f|%>
-            <% @manifest_reports.each do |report| %>
-              <tr>
-                <td><%= report.project_name %></td>
-                <td><%= report.date %></td>
-                <td><%= report.time_in.strftime("%I:%M%p") %></td>
-                <td><%= report.time_out.strftime("%I:%M%p") %></td>
-                <td><%= link_to report.manifest_number, edit_user_manifest_report_path(report.user, report) %></td>
-                <td><%= report.plate %></td>
-                <td><%= report.cell %></td>
-                <td><%= report.company %></td>
-                <td><%= report.truck_number %></td>
-                <td><%= report.facility_name %><td>
-                <td><%= check_box_tag("exports[#{report.id}]") %><td>
-              </tr>
-            <% end %>
-          <% end %>  
-        </tbody>
-        </table>
-      </div> 
-    </div> 
-  </div> 
-</div>                                                                    
-  
+  <div class="table-responsive less-width">
+    <table id="myTable" class="table table-striped tablesorter">
+      <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Date</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+        <th>Manifest Number</th>
+        <th>Plate Number</th>
+        <th>Cell</th>
+        <th>Hauler Name</th>
+        <th>Truck Number</th>
+        <th>Destination</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <%= form_tag export_manifest_report_path(format: 'xlsx'), id: 'export-form' do |f|%>
+        <% @manifest_reports.each do |report| %>
+          <tr>
+            <td><%= report.project_name %></td>
+            <td><%= report.date %></td>
+            <td><%= report.time_in.strftime("%I:%M%p") %></td>
+            <td><%= report.time_out.strftime("%I:%M%p") %></td>
+            <td><%= link_to report.manifest_number, edit_user_manifest_report_path(report.user, report) %></td>
+            <td><%= report.plate %></td>
+            <td><%= report.cell %></td>
+            <td><%= report.company %></td>
+            <td><%= report.truck_number %></td>
+            <td><%= report.facility_name %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+    </table>
+  </div>
+
+
 
 
 

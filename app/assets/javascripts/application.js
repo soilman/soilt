@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require turbolinks
 //= require jquery-ui
 //= require autocomplete-rails
 //= require_tree .
@@ -23,21 +22,22 @@
 
 
 
-$( document ).ready(function() { 
+$( document ).ready(function() {
+  $("#myTable").tablesorter();
   $('.search-query').bind('railsAutocomplete.select', function(event, data){
   $('.search-me').trigger('click');
   });
 });
 
 $(document).ready(function() {
-  $('#export-button').on('click', function() { 
-    $('#export-form').submit(); 
+  $('#export-button').on('click', function() {
+    $('#export-form').submit();
     if ($("[id^=exports]").is(':checked')){
       $('.alert').hide();
       $('.span9').prepend('<div class="alert alert-success">Export successful</div>');
-    }  
+    }
     $('[id^=exports]').removeAttr('checked');
-    
+
   });
 });
 

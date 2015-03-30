@@ -38,51 +38,91 @@
   </head>
   <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top header-link">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </a>
-          <%= link_to "Earth Efficient Access", root_path, class: 'brand' %>
-
-            <ul class="nav navbar-right">
-
-                <div class="dropdown navbar-right">
-                  <% if user_signed_in? %>
-                    <button class="btn btn-default dropdown-toggle logout" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                      <%= current_user.email %>
-                      <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                      <li role="presentation"><%= link_to "Log Out", destroy_user_session_path, method: "delete" %></li>
-                    </ul>
-                  <% end %>
-                </div>
-
-            </ul>
-
+          </button>
+          <%= link_to "Earth Efficient Access", root_path, class: 'navbar-brand' %>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <% if current_user %>
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-edit"></i>&nbsp;Reports<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "My Reports", user_manifest_reports_path(current_user) %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Create Report", new_user_manifest_report_path(current_user) %></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-truck"></i>&nbspTrucks<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "View Trucks", trucks_path%></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Add Truck", new_truck_path %></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-gears"></i>&nbspProjects<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "View Projects", projects_path%></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Add Project", new_project_path %></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-shopping-cart"></i>&nbspHaulers<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "View Haulers", companies_path%></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Add Hauler", new_company_path %></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-institution"></i>&nbspFacilities<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "View Facilities", facilities_path%></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Add Facility", new_facility_path %></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.email %><span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "Log Out", destroy_user_session_path, method: "delete" %></li></li>
+                </ul>
+              </li>
+            </ul>
+          <% end %>
+        </div><!--/.nav-collapse -->
       </div>
-    </div>
+    </nav>
+
 
     <div class="container">
         <div class="row">
           <div class="span9">
             <%= bootstrap_flash %>
-            <% flash.each do |key, value| %>
-              <div class="alert alert-<%= key %>"><%= value %></div>
-            <% end %>
-            <%= yield %>
+
+
+              <%= yield %>
+
           </div>
-          <%= render 'layouts/sidebar' %>
+
+
+
         </div><!--/row-->
 
-      <footer>
-        <p>&copy; Earth Efficient Access <%= Date.today.year %></p>
-      </footer>
+
 
     </div> <!-- /container -->
 

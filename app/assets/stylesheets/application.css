@@ -26,12 +26,12 @@
 }
 
 body {
-  margin-top: 75px;
+  padding-top: 70px;
 }
 
 .search-query {
-  margin-left: -20%;
-  margin-top: 20%;
+  margin-left: 5%;
+  margin-top: 5%;
   max-width: 90%;
 }
 
@@ -39,13 +39,13 @@ body {
   max-width: 15%;
 }
 
-.less-width {
+/*.less-width {
   max-width: 75%
-}
+}*/
 
 .sidebar-nav {
   max-width: 45%;
-  margin-left: 30%;
+  margin-left: 55%;
 }
 
 .plate-search {
@@ -66,6 +66,13 @@ body {
   color: #777777;
 }
 
+.header-link {
+  color: cce0f1 !important;
+}
+
+.sign-in{
+  max-width: 30%;
+}
 /*.dropdown-menu {
   margin-top: -2%;
 }*/
@@ -74,3 +81,7 @@ body {
   margin-left: 55%;
 }
 */
+a.dropdown-toggle {
+  color: #428bca !important;
+  text-size: 20px !important;
+}

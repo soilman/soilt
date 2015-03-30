@@ -9,9 +9,10 @@ Rails.application.routes.draw do
     resources :trucks, only: [:show]
   end
 
+  get '/trucks' => 'trucks#index'
   get '/trucks/new' => 'trucks#new', as: :new_truck
   get '/trucks/:id/edit' => 'trucks#edit', as: :edit_truck
-  post '/trucks' => 'trucks#create', as: :trucks
+  post '/trucks' => 'trucks#create'
   patch 'trucks/:id' => 'trucks#update', as: :update_truck
   get '/users/:user_id/manifest_reports/:id/edit' => 'manifest_reports#edit', as: :edit_user_manifest_report
   patch '/users/:user_id/manifest_reports/:id' => 'manifest_reports#update', as: :update_user_manifest_report
@@ -28,7 +29,7 @@ Rails.application.routes.draw do
   post 'manifest_reports/export' => 'manifest_reports#export', as: :load_manifest_report
 
   resources :users do
-    resources :manifest_reports, only: [:new, :create, :show]
+    resources :manifest_reports, only: [:new, :create, :show, :index]
   end
 
   resources :projects, only: [:new, :edit, :create, :update, :index]

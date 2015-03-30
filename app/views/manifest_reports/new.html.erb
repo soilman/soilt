@@ -1,7 +1,3 @@
-<h3><%= @truck.plate %> | <%= link_to "Edit Truck", edit_truck_path(@truck) %> </h3>
-
-<%= %>
-
 <%= form_for @manifest_report, url: user_manifest_reports_path(@user) do |f| %>
   <p>
     <%= f.label(:project_name, "Project Name") %>
@@ -25,6 +21,10 @@
     <%= f.text_field(:manifest_number, value: manifest_number )%>
   </p>
   <p>
+    <%= f.label(:plate) %>
+    <%= f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id'%>
+  </p>
+  <p>
     <%= f.label(:cell) %>
     <%= f.text_field(:cell)%>
   </p>
@@ -35,10 +35,7 @@
 
   <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
   <%= f.hidden_field(:project_id, {id: 'project_id'}) %>
-  <%= f.hidden_field(:truck_number, value: @truck.number)%>
-  <%= f.hidden_field(:plate, value: @truck.plate)%>
-  <%= f.hidden_field(:company, value: @truck.company.name)%>
-  <%= f.hidden_field :truck_id, :value => @truck.id %>
+  <%= f.hidden_field :truck_id, {id: 'truck_id'} %>
 
   <%= f.submit 'Create Report', :class => 'btn btn-cta btn-cta-tertiary' %>
 <% end %>
