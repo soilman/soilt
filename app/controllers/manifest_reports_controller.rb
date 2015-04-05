@@ -26,9 +26,9 @@ class ManifestReportsController < ApplicationController
 
     if @manifest_report.save
       flash[:success] = "Report created successfully."
-      redirect_to root_path
+      redirect_to :back
     else
-      flash[:error] = "Please complete all fields"
+      flash[:error] = @manifest_report.errors.full_messages.to_sentence
       redirect_to :back
     end
   end
@@ -44,7 +44,7 @@ class ManifestReportsController < ApplicationController
     @manifest_report = ManifestReport.find(params[:id])
     @manifest_report.update_attributes(manifest_report_params)
     if @manifest_report.errors.any?
-      flash[:error] = "Please complete all fields"
+      flash[:error] = @manifest_report.errors.full_messages.to_sentence
       render 'edit'
     else
       flash[:success] = "Report updated successfully."

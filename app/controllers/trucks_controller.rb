@@ -10,9 +10,11 @@ class TrucksController < ApplicationController
     @truck = Truck.create(truck_params)
     company = Company.find(params[:truck][:company_id])
     if @truck.errors.any?
-      redirect_to new_truck_path, notice: "Please complete all fields."
+      flash[:error] = @truck.errors.full_messages.to_sentence
+      redirect_to :back
     else
-      redirect_to company_truck_path(company, @truck)
+      flash[:success] = "Truck successfully created"
+      redirect_to :back
     end
   end
 
@@ -26,10 +28,11 @@ class TrucksController < ApplicationController
     @truck.update_attributes(truck_params)
     company = Company.find(params[:truck][:company_id])
     if @truck.errors.any?
-      render 'edit', notice: "Error. Please try again."
+      flash[:error] = @truck.errors.full_messages.to_sentence
+      redirect_to :back
     else
-      redirect_to root_path
-      # redirect_to company_truck_path(company, @truck)
+      flash[:success] = "Truck successfully updated"
+      redirect_to :back
     end
 
   end

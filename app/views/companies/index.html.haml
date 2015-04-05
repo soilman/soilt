@@ -1,0 +1,54 @@
+.button-container
+  = link_to "javascript:void(0)" do
+    %button.fa.fa-cog.btn.btn-info.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#company_modal"}
+      &nbsp;Add New Hauler
+  = link_to "javascript:void(0)" do
+    %button.fa.fa-cog.btn.btn-success.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#truck_modal"}
+      &nbsp;Add New Truck
+  - @companies.each_slice(2) do |comps|
+    .container-fluid.row
+      - comps.each do |c|
+        .container-fluid.col-xs-12.col-md-6
+          .panel.panel-info
+            .panel-heading
+              .h5
+                %i.fa.fa-edit
+                  = link_to c.name, "#", 'data-toggle' =>  "modal", 'data-target' => "#edit_company_#{c.id}_modal"
+
+            .panel-body
+              .table-responsive
+                %table.table.table-striped.table-bordered
+                  %tr
+                    %th Plate
+                    %th Truck Number
+                  - c.trucks.each do |t|
+                    %tr
+                      %td= link_to t.plate, "#", 'data-toggle' =>  "modal", 'data-target' => "#edit_truck_#{t.id}_modal"
+                      %td= t.number
+
+                    .modal.fade{:id => "edit_truck_#{t.id}_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
+                      .modal-dialog
+                        .modal-content
+                          .modal-header
+                            %h4.modal-title
+                              Edit truck
+                          .modal-body
+                            = render 'trucks/edit', truck: t
+
+                          .modal-footer
+
+        .modal.fade{:id => "edit_company_#{c.id}_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %h4.modal-title
+                  Edit hauler
+              .modal-body
+                = render 'companies/edit', company: c
+
+              .modal-footer
+
+
+
+= render "companies/new"
+= render "trucks/new"

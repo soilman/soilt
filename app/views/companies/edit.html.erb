@@ -1,8 +1,0 @@
-<%= form_for @company, url: company_path do |f| %>
-    <p>
-      <%= f.label(:name) %>
-      <%= f.text_field(:name, value: @company.name, :autocomplete => :off) %>
-    </p>
-    <%= f.submit 'Submit', :class => 'btn btn-cta btn-cta-tertiary' %>
-<% end %>
-

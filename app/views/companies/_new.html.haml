@@ -1,0 +1,16 @@
+
+.modal.fade{:id => "company_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.modal-title
+          Add new hauler
+      .modal-body
+        = form_for(@company, :html => {:id => "new_company_form"}) do |f|
+          .form-group
+            = f.label(:name)
+            = f.text_field(:name, value: @company.name, :autocomplete => :off)
+          .form-group
+            = f.submit "Submit", :class => "btn btn-primary"
+
+      .modal-footer

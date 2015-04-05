@@ -36,6 +36,7 @@ gem 'jquery-tablesorter'
 gem 'acts_as_xlsx'
 gem 'axlsx_rails'
 gem 'therubyracer'
+gem 'haml'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,0 +1,21 @@
+.modal.fade{:id => "truck_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.modal-title
+          Add new truck
+      .modal-body
+        = form_for(@truck, url: trucks_path) do |f|
+          .form-group
+            = f.label(:plate)
+            = f.text_field(:plate, value: @truck.plate || params[:query], :autocomplete => :off)
+          .form-group
+            = f.label(:company_id)
+            = f.select :company_id, options_from_collection_for_select(@companies, "id", "name", selected: @truck.company.try(:id))
+          .form-group
+            = f.label(:number)
+            = f.text_field(:number, value: @truck.number, :autocomplete => :off)
+          .form-group
+            = f.submit "Submit", :class => "btn btn-primary"
+
+      .modal-footer
