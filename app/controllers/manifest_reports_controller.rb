@@ -18,6 +18,8 @@ class ManifestReportsController < ApplicationController
     @user = current_user
     truck = Truck.find(params[:manifest_report][:truck_id])
     @manifest_report = @user.manifest_reports.build(manifest_report_params)
+    @manifest_report.project = Project.where(name: params[:manifest_report][:project_name]).first_or_create
+    @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
     @manifest_report.plate = truck.plate
     @manifest_report.truck_number = truck.number
     @manifest_report.company = truck.company
@@ -27,7 +29,7 @@ class ManifestReportsController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = "Please complete all fields"
-      redirect_to truck_path(truck)
+      redirect_to :back
     end
   end
 

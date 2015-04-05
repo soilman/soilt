@@ -5,4 +5,5 @@ class Truck < ActiveRecord::Base
   has_many :facilities, through: :manifest_reports
 
   validates_presence_of :plate, :number, :company
+  validates_uniqueness_of :plate
 end
