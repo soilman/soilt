@@ -23,9 +23,21 @@
 
 
 $( document ).ready(function() {
-  $("#myTable").tablesorter();
+  $(".myTable").tablesorter();
   $('.search-query').bind('railsAutocomplete.select', function(event, data){
   $('.search-me').trigger('click');
+  });
+
+  $('.report-submit').on('click', function(e) {
+    var plates = $(".modal").data('plates');
+    var plate_value = $('#manifest_report_plate').val()
+    if ( $.inArray(plate_value, plates) == -1 ){
+      e.preventDefault();
+      e.stopPropagation();
+      $('.modal-footer').empty();
+      $('.modal-footer').append("Plate not found. Please try again.")
+
+    }
   });
 });
 

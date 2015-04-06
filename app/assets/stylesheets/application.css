@@ -89,4 +89,10 @@ a.dropdown-toggle {
   margin-bottom: 20px;
 }
 
-
+.modal-footer {
+  text-align: center;
+  color: red;
+}
+/*.ui-autocomplete {
+  position: fixed !important;
+}*/

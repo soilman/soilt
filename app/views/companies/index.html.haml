@@ -1,41 +1,44 @@
 .button-container
   = link_to "javascript:void(0)" do
-    %button.fa.fa-cog.btn.btn-info.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#company_modal"}
+    %button.fa.fa-plus.btn.btn-info.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#company_modal"}
       &nbsp;Add New Hauler
   = link_to "javascript:void(0)" do
-    %button.fa.fa-cog.btn.btn-success.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#truck_modal"}
+    %button.fa.fa-plus.btn.btn-success.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#truck_modal"}
       &nbsp;Add New Truck
-  - @companies.each_slice(2) do |comps|
+  - @companies.sort_by(&:name).each_slice(2) do |comps|
     .container-fluid.row
       - comps.each do |c|
         .container-fluid.col-xs-12.col-md-6
           .panel.panel-info
             .panel-heading
               .h5
-                %i.fa.fa-edit
+                %i.fa.fa-flag
                   = link_to c.name, "#", 'data-toggle' =>  "modal", 'data-target' => "#edit_company_#{c.id}_modal"
 
-            .panel-body
-              .table-responsive
-                %table.table.table-striped.table-bordered
-                  %tr
-                    %th Plate
-                    %th Truck Number
-                  - c.trucks.each do |t|
-                    %tr
-                      %td= link_to t.plate, "#", 'data-toggle' =>  "modal", 'data-target' => "#edit_truck_#{t.id}_modal"
-                      %td= t.number
+            - if c.trucks.any?
+              .panel-body
+                .table-responsive
+                  %table.myTable.table.table-striped.table-bordered.tablesorter
+                    %thead
+                      %tr
+                        %th Plate
+                        %th Truck Number
+                    %tbody
+                      - c.trucks.sort_by(&:number).each do |t|
+                        %tr
+                          %td= link_to t.plate, "#", 'data-toggle' =>  "modal", 'data-target' => "#edit_truck_#{t.id}_modal"
+                          %td= t.number
 
-                    .modal.fade{:id => "edit_truck_#{t.id}_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
-                      .modal-dialog
-                        .modal-content
-                          .modal-header
-                            %h4.modal-title
-                              Edit truck
-                          .modal-body
-                            = render 'trucks/edit', truck: t
+                        .modal.fade{:id => "edit_truck_#{t.id}_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
+                          .modal-dialog
+                            .modal-content
+                              .modal-header
+                                %h4.modal-title
+                                  Edit truck
+                              .modal-body
+                                = render 'trucks/edit', truck: t
 
-                          .modal-footer
+                              .modal-footer
 
         .modal.fade{:id => "edit_company_#{c.id}_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
           .modal-dialog

@@ -7,7 +7,7 @@ class ManifestReport < ActiveRecord::Base
   accepts_nested_attributes_for :project
   accepts_nested_attributes_for :facility
 
-  validates_presence_of :time_in, :time_out, :manifest_number, :cell, :facility_name, :plate, :truck_number, :company, :date, :project_name
+  validates_presence_of :time_in, :time_out, :manifest_number, :cell, :plate, :truck_number, :company, :date, :truck
   validates_uniqueness_of :manifest_number
 
   acts_as_xlsx
