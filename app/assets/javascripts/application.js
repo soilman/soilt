@@ -40,17 +40,21 @@ $( document ).ready(function() {
       $('.modal-footer.manifest-report').fadeOut(2000);
     }
   });
-});
 
-$(document).ready(function() {
-  $('#export-button').on('click', function() {
-    $('#export-form').submit();
-    if ($("[id^=exports]").is(':checked')){
-      $('.alert').hide();
-      $('.span9').prepend('<div class="alert alert-success">Export successful</div>');
-    }
-    $('[id^=exports]').removeAttr('checked');
-
+  $('#export_button').on('click', function(e) {
+    $('#export_modal').modal('hide');
   });
 });
+
+// $(document).ready(function() {
+//   $('#export-button').on('click', function() {
+//     $('#export-form').submit();
+//     if ($("[id^=exports]").is(':checked')){
+//       $('.alert').hide();
+//       $('.span9').prepend('<div class="alert alert-success">Export successful</div>');
+//     }
+//     $('[id^=exports]').removeAttr('checked');
+
+//   });
+// });
 

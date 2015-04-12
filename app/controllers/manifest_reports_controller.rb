@@ -54,16 +54,18 @@ class ManifestReportsController < ApplicationController
   end
 
   def export
-    if params['exports']
-      ids = params['exports'].map {|k, v| k.to_i if v == '1'}.compact
-      @reports = ManifestReport.where(id: ids)
-      flash[:success] = "Export successful."
-      respond_to do |format|
-        format.xlsx {render xlsx: 'export',filename: "invoice_#{Date.today.to_s}.xlsx"}
-      end
-    else
-      flash[:error] = "Please select a report to export."
-      redirect_to root_path
+    s_y = params[:start_date].values[0]
+    s_m = params[:start_date].values[1]
+    s_d = params[:start_date].values[2]
+    e_y = params[:end_date].values[0]
+    e_m = params[:end_date].values[1]
+    e_d = params[:end_date].values[2]
+
+    start_date = "#{s_y}-#{s_m}-#{s_d}"
+    end_date = "#{e_y}-#{e_m}-#{e_d}"
+    @reports = ManifestReport.where('date >= ?', Date.parse(start_date)).where('date <= ?', Date.parse(end_date))
+    respond_to do |format|
+      format.xlsx {render xlsx: 'export', filename: "invoice_#{Date.today.to_s}.xlsx"}
     end
   end
 

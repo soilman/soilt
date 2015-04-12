@@ -1,0 +1,18 @@
+.modal.fade{:id => "export_modal", "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => 'upload-label', "aria-hidden" => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.modal-title
+          Add new truck
+      .modal-body
+        = form_tag export_manifest_report_path(format: 'xlsx'), id: 'export-form' do
+          .form-group
+            = label_tag(:start_date)
+            = date_select(:start_date, { default: Date.today }, { class: "datetime-select" })
+          .form-group
+            = label_tag(:end_date)
+            = date_select(:end_date, { default: Date.today }, { class: "datetime-select" })
+          .form-group
+            = submit_tag "Export", :class => "btn btn-primary", :id => "export_button"
+
+      .modal-footer
