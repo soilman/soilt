@@ -41,8 +41,6 @@ $( document ).ready(function() {
     }
   });
 
-  $( ".plate-field" ).autocomplete( "option", "appendTo", ".manifest-form" );
-
   $('#export_button').on('click', function(e) {
     $('#export_modal').modal('hide');
   });

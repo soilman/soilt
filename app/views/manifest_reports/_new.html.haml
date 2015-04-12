@@ -26,7 +26,7 @@
               = f.text_field(:manifest_number, value: manifest_number, :autocomplete => :off)
             .form-group
               = f.label(:plate)
-              = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id', class: "plate-field"
+              = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id', :append_to => "#new_report_modal"
             .form-group
               = f.label(:cell)
               = f.text_field(:cell, :autocomplete => :off)
