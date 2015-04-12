@@ -23,7 +23,7 @@
             .form-group
               = f.label(:manifest_number)
               - manifest_number =  ManifestReport.all.size == 0 ? "" : (ManifestReport.last.manifest_number + 1)
-              = f.text_field(:manifest_number, value: manifest_number )
+              = f.text_field(:manifest_number, value: manifest_number, :autocomplete => :off)
             .form-group
               = f.label(:plate)
               = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id'
