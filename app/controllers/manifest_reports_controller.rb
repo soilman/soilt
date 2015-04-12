@@ -89,5 +89,4 @@ class ManifestReportsController < ApplicationController
         :date
       )
     end
-
 end
