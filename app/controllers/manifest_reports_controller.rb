@@ -63,9 +63,9 @@ class ManifestReportsController < ApplicationController
 
     start_date = "#{s_y}-#{s_m}-#{s_d}"
     end_date = "#{e_y}-#{e_m}-#{e_d}"
-    @reports = ManifestReport.where('date >= ?', Date.parse(start_date)).where('date <= ?', Date.parse(end_date))
+    @reports = ManifestReport.where('date >= ?', Date.parse(start_date)).where('date <= ?', Date.parse(end_date)).where('project_name = ?', params[:project_name])
     respond_to do |format|
-      format.xlsx {render xlsx: 'export', filename: "invoice_#{Date.today.to_s}.xlsx"}
+      format.xlsx {render xlsx: 'export', filename: "#{Date.today.to_s}.xlsx"}
     end
   end
 

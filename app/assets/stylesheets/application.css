@@ -93,6 +93,6 @@ a.dropdown-toggle {
   text-align: center;
   color: red;
 }
-/*.ui-autocomplete {
+.ui-autocomplete {
   position: fixed !important;
-}*/
+}
