@@ -7,7 +7,7 @@
           %h4.modal-title
             Create new report
         .modal-body.ui-front
-          = form_for(ManifestReport.new, url: user_manifest_reports_path(current_user)) do |f|
+          = form_for(ManifestReport.new, url: user_manifest_reports_path(current_user), :html => {class: "manifest-form"}) do |f|
             .form-group
               = f.label(:project_name, "Project Name")
               = f.autocomplete_field :project_name, autocomplete_project_name_manifest_reports_path, :id_element => '#project_id'
@@ -26,7 +26,7 @@
               = f.text_field(:manifest_number, value: manifest_number, :autocomplete => :off)
             .form-group
               = f.label(:plate)
-              = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id'
+              = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id', class: "plate-field"
             .form-group
               = f.label(:cell)
               = f.text_field(:cell, :autocomplete => :off)
