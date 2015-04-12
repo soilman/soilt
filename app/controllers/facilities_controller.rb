@@ -1,4 +1,5 @@
 class FacilitiesController < ApplicationController
+  before_action :authenticate_user!
 
   def new
     @facility = Facility.new

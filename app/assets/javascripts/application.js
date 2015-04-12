@@ -34,9 +34,10 @@ $( document ).ready(function() {
     if ( $.inArray(plate_value, plates) == -1 ){
       e.preventDefault();
       e.stopPropagation();
-      $('.modal-footer').empty();
-      $('.modal-footer').append("Plate not found. Please try again.")
-
+      $('.modal-footer.manifest-report').empty();
+      $('.modal-footer.manifest-report').show();
+      $('.modal-footer.manifest-report').append("Plate not found. Please try again.");
+      $('.modal-footer.manifest-report').fadeOut(2000);
     }
   });
 });
