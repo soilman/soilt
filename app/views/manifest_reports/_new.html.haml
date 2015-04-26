@@ -32,7 +32,7 @@
               = f.text_field(:cell, :autocomplete => :off)
             .form-group
               = f.label(:facility_name)
-              = f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, :id_element => '#facility_id'
+              = f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @last_facility, :id_element => '#facility_id'
             .form-group
               = f.hidden_field(:facility_id, {id: 'facility_id'})
               = f.hidden_field(:project_id, {id: 'project_id'})

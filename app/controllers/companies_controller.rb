@@ -2,7 +2,7 @@ class CompaniesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @companies = Company.all
+    @companies = Company.all.sort_by(&:name)
     @company = Company.new
     @truck = Truck.new
   end
@@ -11,7 +11,8 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @company = Company.create(company_params)
+    name = params[:company][:name].upcase
+    @company = Company.create(name: name)
     if @company.errors.any?
       flash[:error] = @company.errors.full_messages.to_sentence
       redirect_to :back
@@ -31,7 +32,8 @@ class CompaniesController < ApplicationController
 
   def update
     @company = Company.find(params[:id])
-    @company.update_attributes(company_params)
+    name = params[:company][:name].upcase
+    @company.update_attributes(name: name)
     if @company.errors.any?
       flash[:error] = @company.errors.full_messages.to_sentence
       render 'edit'

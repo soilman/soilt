@@ -1,6 +1,7 @@
 class ManifestReport < ActiveRecord::Base
   belongs_to :user
   belongs_to :truck
+  has_one :company, :through => :truck
   belongs_to :facility, :autosave => true
   belongs_to :project, :autosave => true
 

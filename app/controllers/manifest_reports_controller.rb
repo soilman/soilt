@@ -15,6 +15,9 @@ class ManifestReportsController < ApplicationController
   end
 
   def create
+    # unless Truck.where(:plate => params[:manifest_report][:plate]).any?
+    #   redirect_to :
+
     @user = current_user
     @manifest_report = @user.manifest_reports.build(manifest_report_params)
     @manifest_report.project = Project.where(name: params[:manifest_report][:project_name]).first_or_create
@@ -23,7 +26,7 @@ class ManifestReportsController < ApplicationController
     if truck
       @manifest_report.plate = truck.plate
       @manifest_report.truck_number = truck.number
-      @manifest_report.company = truck.company
+      # @manifest_report.company = truck.company
     end
     if @manifest_report.save
       flash[:success] = "Report created successfully."

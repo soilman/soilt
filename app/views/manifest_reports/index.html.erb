@@ -28,7 +28,7 @@
             <td><%= link_to report.manifest_number, edit_user_manifest_report_path(report.user, report) %></td>
             <td><%= report.plate %></td>
             <td><%= report.cell %></td>
-            <td><%= report.company %></td>
+            <td><%= report.company.name %></td>
             <td><%= report.truck_number %></td>
             <td><%= report.facility_name %></td>
           </tr>
