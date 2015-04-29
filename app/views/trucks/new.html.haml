@@ -1,0 +1,18 @@
+.ml-20
+  %h4
+    Add new truck
+  %br
+  = form_for(@truck, url: trucks_path) do |f|
+    .form-group
+      = f.label(:plate)
+      = f.text_field(:plate, value: @truck.plate || params[:query], :autocomplete => :off)
+    .form-group
+      = f.label(:company_name)
+      = f.autocomplete_field :company_name, autocomplete_company_name_trucks_path, :id_element => '#company_id'
+    .form-group
+      = f.label(:number)
+      = f.text_field(:number, value: @truck.number, :autocomplete => :off)
+    .form-group
+      = f.hidden_field(:company_id, {id: 'company_id'})
+      = f.submit "Submit", :class => "btn btn-primary"
+

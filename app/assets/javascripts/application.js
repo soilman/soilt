@@ -28,18 +28,18 @@ $( document ).ready(function() {
   $('.search-me').trigger('click');
   });
 
-  $('.report-submit').on('click', function(e) {
-    var plates = $(".modal").data('plates');
-    var plate_value = $('#manifest_report_plate').val()
-    if ( $.inArray(plate_value, plates) == -1 ){
-      e.preventDefault();
-      e.stopPropagation();
-      $('.modal-footer.manifest-report').empty();
-      $('.modal-footer.manifest-report').show();
-      $('.modal-footer.manifest-report').append("Plate not found. Please try again.");
-      $('.modal-footer.manifest-report').fadeOut(2000);
-    }
-  });
+  // $('.report-submit').on('click', function(e) {
+  //   var plates = $(".modal").data('plates');
+  //   var plate_value = $('#manifest_report_plate').val()
+  //   if ( $.inArray(plate_value, plates) == -1 ){
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //     $('.modal-footer.manifest-report').empty();
+  //     $('.modal-footer.manifest-report').show();
+  //     $('.modal-footer.manifest-report').append("Plate not found. Please try again.");
+  //     $('.modal-footer.manifest-report').fadeOut(2000);
+  //   }
+  // });
 
   $('#export_button').on('click', function(e) {
     $('#export_modal').modal('hide');

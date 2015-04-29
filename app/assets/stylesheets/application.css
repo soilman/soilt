@@ -96,3 +96,7 @@ a.dropdown-toggle {
 .ui-autocomplete {
   position: fixed !important;
 }
+
+.ml-20 {
+  margin-left: 20px;
+}

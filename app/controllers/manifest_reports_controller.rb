@@ -15,25 +15,27 @@ class ManifestReportsController < ApplicationController
   end
 
   def create
-    # unless Truck.where(:plate => params[:manifest_report][:plate]).any?
-    #   redirect_to :
-
-    @user = current_user
-    @manifest_report = @user.manifest_reports.build(manifest_report_params)
-    @manifest_report.project = Project.where(name: params[:manifest_report][:project_name]).first_or_create
-    @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
-    truck = @manifest_report.truck
-    if truck
-      @manifest_report.plate = truck.plate
-      @manifest_report.truck_number = truck.number
-      # @manifest_report.company = truck.company
-    end
-    if @manifest_report.save
-      flash[:success] = "Report created successfully."
-      redirect_to :back
+    unless Truck.where(:plate => params[:manifest_report][:plate]).any?
+      flash[:error] = "Couldn't find truck with that plate. Create it now"
+      redirect_to new_truck_path
     else
-      flash[:error] = @manifest_report.errors.full_messages.to_sentence
-      redirect_to :back
+      @user = current_user
+      @manifest_report = @user.manifest_reports.build(manifest_report_params)
+      @manifest_report.project = Project.where(name: params[:manifest_report][:project_name]).first_or_create
+      @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
+      truck = @manifest_report.truck
+      if truck
+        @manifest_report.plate = truck.plate
+        @manifest_report.truck_number = truck.number
+        # @manifest_report.company = truck.company
+      end
+      if @manifest_report.save
+        flash[:success] = "Report created successfully."
+        redirect_to :back
+      else
+        flash[:error] = @manifest_report.errors.full_messages.to_sentence
+        redirect_to :back
+      end
     end
   end
 

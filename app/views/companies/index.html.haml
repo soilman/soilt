@@ -2,8 +2,9 @@
   = link_to "javascript:void(0)" do
     %button.fa.fa-plus.btn.btn-info.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#company_modal"}
       &nbsp;Add New Hauler
-  = link_to "javascript:void(0)" do
-    %button.fa.fa-plus.btn.btn-success.mb-20{"type" => "button", "data-toggle" => "modal", "data-target" => "#truck_modal"}
+  = link_to new_truck_path do
+    %button.fa.fa-plus.btn.btn-success.mb-20
+      = #{"type" => "button", "data-toggle" => "modal", "data-target" => "#truck_modal"}
       &nbsp;Add New Truck
   - @companies.sort_by(&:name).each_slice(2) do |comps|
     .container-fluid.row
@@ -54,4 +55,4 @@
 
 
 = render "companies/new"
-= render "trucks/new"
+=# render "trucks/new"

@@ -1,5 +1,6 @@
 class TrucksController < ApplicationController
   before_action :authenticate_user!
+  autocomplete :company, :name
 
   def new
     @truck = Truck.new
@@ -7,13 +8,13 @@ class TrucksController < ApplicationController
   end
 
   def create
-    @truck = Truck.create(truck_params)
-    company = Company.find(params[:truck][:company_id])
-    if @truck.errors.any?
-      flash[:error] = @truck.errors.full_messages.to_sentence
-      redirect_to :back
-    else
+    @truck = Truck.new(truck_params)
+    @truck.company = Company.where(name: params[:truck][:company_name]).first_or_create
+    if @truck.save
       flash[:success] = "Truck successfully created"
+      redirect_to new_user_manifest_report_path(current_user)
+    else
+      flash[:error] = @truck.errors.full_messages.to_sentence
       redirect_to :back
     end
   end
