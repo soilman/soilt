@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :trackable, :validatable#, :rememberable
   has_many :daily_reports
   has_many :manifest_reports, through: :manifest_reports
+  has_many :permissions
 end
