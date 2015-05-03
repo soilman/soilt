@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get '/trucks/:id/edit' => 'trucks#edit', as: :edit_truck
   post '/trucks' => 'trucks#create'
   patch 'trucks/:id' => 'trucks#update', as: :update_truck
-  get '/users/:user_id/manifest_reports/:id/edit' => 'manifest_reports#edit', as: :edit_user_manifest_report
-  patch '/users/:user_id/manifest_reports/:id' => 'manifest_reports#update', as: :update_user_manifest_report
+  #get '/users/:user_id/manifest_reports/:id/edit' => 'manifest_reports#edit', as: :edit_user_manifest_report
+  #patch '/users/:user_id/manifest_reports/:id' => 'manifest_reports#update', as: :update_user_manifest_report
 
   # resources :manifest_reports do
   #   get :autocomplete_truck_plate, on: :collection
@@ -30,7 +30,9 @@ Rails.application.routes.draw do
   post 'manifest_reports/export' => 'manifest_reports#export', as: :load_manifest_report
 
   resources :users do
-    resources :manifest_reports, only: [:new, :create, :show, :index]
+    resources :daily_reports do
+      resources :manifest_reports, only: [:new, :create, :show, :index, :edit, :update]
+    end
   end
 
   resources :projects, only: [:new, :edit, :create, :update, :index]

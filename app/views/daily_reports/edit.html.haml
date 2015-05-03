@@ -1,0 +1,16 @@
+- if current_user
+  .ml-20
+    %h4
+      Edit report
+    %br
+    = form_for(@daily_report, url: user_daily_report_path(@user), method: 'patch') do |f|
+      .form-group
+        = f.label(:project_name, "Project Name")
+        = f.autocomplete_field :project_name, autocomplete_project_name_manifest_reports_path, value: @daily_report.project_name, :id_element => '#project_id'
+      .form-group
+        = f.label(:date)
+        = f.date_select(:date, { default: @daily_report.date }, { class: "datetime-select" })
+      .form-group
+        = f.hidden_field(:project_id, {id: 'project_id'})
+        = f.submit "Submit", :class => "btn btn-primary report-submit"
+

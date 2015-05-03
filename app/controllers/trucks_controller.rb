@@ -12,7 +12,11 @@ class TrucksController < ApplicationController
     @truck.company = Company.where(name: params[:truck][:company_name]).first_or_create
     if @truck.save
       flash[:success] = "Truck successfully created"
-      redirect_to new_user_manifest_report_path(current_user)
+      if params[:truck][:daily_report_id].present?
+        redirect_to new_user_daily_report_manifest_report_path(current_user, params[:truck][:daily_report_id], plate: params[:truck][:plate], cell: params[:truck][:cell], facility_name: params[:truck][:facility_name])
+      else
+        redirect_to companies_path
+      end
     else
       flash[:error] = @truck.errors.full_messages.to_sentence
       redirect_to :back

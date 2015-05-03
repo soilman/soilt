@@ -1,15 +1,9 @@
 - if current_user
   .ml-20
     %h4
-      Create new report
+      Create load
     %br
-    = form_for(ManifestReport.new, url: user_manifest_reports_path(current_user), :html => {class: "manifest-form"}) do |f|
-      .form-group
-        = f.label(:project_name, "Project Name")
-        = f.autocomplete_field :project_name, autocomplete_project_name_manifest_reports_path, :id_element => '#project_id'
-      .form-group
-        = f.label(:date)
-        = f.date_select(:date, { default: Date.today }, { class: "datetime-select" })
+    = form_for(ManifestReport.new, url: user_daily_report_manifest_reports_path(current_user, @daily_report), :html => {class: "manifest-form"}) do |f|
       .form-group
         = f.label(:time_in)
         = f.time_select(:time_in, { default: Time.now, ampm: true, :ignore_date => true, class: "datetime-select" })
@@ -18,19 +12,18 @@
         = f.time_select(:time_out, { default: Time.now + 8.minutes, ampm: true, :ignore_date => true, class: "datetime-select" })
       .form-group
         = f.label(:manifest_number)
-        - manifest_number =  ManifestReport.all.size == 0 ? "" : (ManifestReport.last.manifest_number + 1)
+        - manifest_number =  @daily_report.manifest_reports.size == 0 ? "" : (@daily_report.manifest_reports.last.manifest_number + 1)
         = f.text_field(:manifest_number, value: manifest_number, :autocomplete => :off)
       .form-group
         = f.label(:plate)
-        = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, :id_element => '#truck_id', class: "plate-field", :append_to => ".plate-field"
+        = f.autocomplete_field :plate, autocomplete_truck_plate_manifest_reports_path, value: params[:plate], :id_element => '#truck_id', class: "plate-field", :append_to => ".plate-field"
       .form-group
         = f.label(:cell)
-        = f.text_field(:cell, :autocomplete => :off)
+        = f.text_field(:cell, value: params[:cell], :autocomplete => :off)
       .form-group
         = f.label(:facility_name)
-        = f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @last_facility, :id_element => '#facility_id'
+        = f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: params[:facility_name] || @last_facility, :id_element => '#facility_id'
       .form-group
         = f.hidden_field(:facility_id, {id: 'facility_id'})
-        = f.hidden_field(:project_id, {id: 'project_id'})
         = f.hidden_field :truck_id, {id: 'truck_id'}
         = f.submit "Submit", :class => "btn btn-primary report-submit"

@@ -5,7 +5,7 @@
   = form_for(@truck, url: trucks_path) do |f|
     .form-group
       = f.label(:plate)
-      = f.text_field(:plate, value: @truck.plate || params[:query], :autocomplete => :off)
+      = f.text_field(:plate, value: params[:plate], :autocomplete => :off)
     .form-group
       = f.label(:company_name)
       = f.autocomplete_field :company_name, autocomplete_company_name_trucks_path, :id_element => '#company_id'
@@ -14,5 +14,8 @@
       = f.text_field(:number, value: @truck.number, :autocomplete => :off)
     .form-group
       = f.hidden_field(:company_id, {id: 'company_id'})
+      = f.hidden_field(:daily_report_id, value: params[:daily_report_id])
+      = f.hidden_field(:facility_name, value: params[:facility_name])
+      = f.hidden_field(:cell, value: params[:cell])
       = f.submit "Submit", :class => "btn btn-primary"
 

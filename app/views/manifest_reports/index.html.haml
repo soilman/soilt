@@ -1,0 +1,53 @@
+.button-container
+  = link_to new_user_daily_report_manifest_report_path(current_user.id, @daily_report.id) do
+    %button.fa.fa-plus.btn.btn-info.mb-20
+      &nbsp;Add Load
+
+  - if @manifest_reports.any?
+    .panel.panel-info
+      .panel-heading
+        .h4
+          %i.fa.fa-globe
+            = "#{@daily_report.project.name} | #{@daily_report.date}"
+      .panel-body
+        .manifest-reports-table
+          .table-responsive.less-width
+            %table.myTable.table.table-striped.tablesorter{ id: "projects" }
+              %thead
+                %tr
+                  %th
+                    Time In
+                  %th
+                    Time Out
+                  %th
+                    Manifest Number
+                  %th
+                    Plate Number
+                  %th
+                    Cell
+                  %th
+                    Hauler Name
+                  %th
+                    Truck Number
+                  %th
+                    Destination
+              %tbody
+                - @manifest_reports.each do |report|
+                  %tr
+                    %td
+                      = report.time_in.strftime("%I:%M%p")
+                    %td
+                      = report.time_out.strftime("%I:%M%p")
+                    %td
+                      = link_to report.manifest_number, edit_user_daily_report_manifest_report_path(report.daily_report.user, @daily_report, report)
+                    %td
+                      = report.plate
+                    %td
+                      = report.cell
+                    %td
+                      = report.company.name
+                    %td
+                      = report.truck_number
+                    %td
+                      = report.facility.name
+

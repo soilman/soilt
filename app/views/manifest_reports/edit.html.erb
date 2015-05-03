@@ -1,12 +1,5 @@
-<%= form_for @manifest_report, url: update_user_manifest_report_path(@user, @manifest_report) do |f| %>
-  <p>
-    <%= f.label(:project_name, "Project Name") %>
-    <%= f.autocomplete_field :project_name, autocomplete_project_name_manifest_reports_path, value: @manifest_report.project_name ,:id_element => '#project_id'%>
-  </p>
-   <p>
-    <%= f.label(:date) %>
-    <%= f.date_select(:date, { default: @manifest_report.date }, { class: "datetime-select" }) %>
-  </p>
+<%= form_for @manifest_report, url: user_daily_report_manifest_report_path(@user, @daily_report, @manifest_report), method: 'patch' do |f| %>
+
   <p>
     <%= f.label(:time_in) %>
     <%= f.time_select(:time_in, { default: @manifest_report.time_in, ampm: true, :ignore_date => true, class: "datetime-select" }) %>
@@ -16,34 +9,24 @@
     <%= f.time_select(:time_out, { default: @manifest_report.time_out, ampm: true, :ignore_date => true, class: "datetime-select" }) %>
   </p>
   <p>
-    <%= f.label(:plate, "Plate Number") %>
-    <%= f.text_field(:plate, value: @manifest_report.plate)%>
-  </p>
-  <p>
     <%= f.label(:manifest_number) %>
     <% manifest_number =  @manifest_report.manifest_number%>
     <%= f.text_field(:manifest_number, value: manifest_number )%>
   </p>
   <p>
-    <%= f.label(:company, "Hauler Name") %>
-    <%= f.text_field(:company, value: @manifest_report.company.name)%>
-  </p>
-  <p>
-    <%= f.label(:truck_number) %>
-    <%= f.text_field(:truck_number, value: @manifest_report.truck_number)%>
+    <%= f.label(:plate, "Plate Number") %>
+    <%= f.text_field(:plate, value: @manifest_report.plate)%>
   </p>
   <p>
     <%= f.label(:cell) %>
     <%= f.text_field(:cell, value: @manifest_report.cell)%>
   </p>
   <p>
-  <p>
     <%= f.label(:facility_name) %>
-    <%= f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @manifest_report.facility_name, :id_element => '#facility_id'%>
+    <%= f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @manifest_report.facility.name, :id_element => '#facility_id'%>
   </p>
-  <%= f.hidden_field :truck_id, :value => @truck.id %>
+  <%= f.hidden_field :truck_id, {id: 'truck_id'} %>
   <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
-  <%= f.hidden_field(:project_id, {id: 'project_id'}) %>
-  <%= f.submit 'Create Report', :class => 'btn btn-cta btn-cta-tertiary' %>
+  <%= f.submit 'Update Load', :class => 'btn btn-cta btn-cta-tertiary' %>
 <% end %>
 

@@ -1,14 +1,14 @@
 class ManifestReport < ActiveRecord::Base
+  belongs_to :daily_report
   belongs_to :user
   belongs_to :truck
   has_one :company, :through => :truck
   belongs_to :facility, :autosave => true
-  belongs_to :project, :autosave => true
 
-  accepts_nested_attributes_for :project
+  #accepts_nested_attributes_for :project
   accepts_nested_attributes_for :facility
 
-  validates_presence_of :time_in, :time_out, :manifest_number, :cell, :plate, :truck_number, :company, :date, :truck
+  validates_presence_of :time_in, :time_out, :manifest_number, :cell, :plate, :truck_number, :company, :truck
   validates_uniqueness_of :manifest_number
 
   acts_as_xlsx

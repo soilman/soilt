@@ -7,21 +7,31 @@ class ManifestReportsController < ApplicationController
   def new
     @user = current_user
     @manifest_report = ManifestReport.new
+    @daily_report = DailyReport.find(params[:daily_report_id])
+    if @daily_report.manifest_reports.any?
+      @last_facility = @daily_report.manifest_reports.last.facility.name
+    end
   end
 
   def index
     @user = current_user
-    @manifest_reports = ManifestReport.all
+    @daily_report = DailyReport.find(params[:daily_report_id])
+    @manifest_reports = @daily_report.manifest_reports
   end
 
   def create
     unless Truck.where(:plate => params[:manifest_report][:plate]).any?
       flash[:error] = "Couldn't find truck with that plate. Create it now"
-      redirect_to new_truck_path
+      redirect_to new_truck_path(
+        daily_report_id: params[:daily_report_id],
+        plate: params[:manifest_report][:plate],
+        facility_name: params[:manifest_report][:facility_name],
+        cell: params[:manifest_report][:cell]
+        )
     else
+      @daily_report = DailyReport.find(params[:daily_report_id])
       @user = current_user
-      @manifest_report = @user.manifest_reports.build(manifest_report_params)
-      @manifest_report.project = Project.where(name: params[:manifest_report][:project_name]).first_or_create
+      @manifest_report = @daily_report.manifest_reports.build(manifest_report_params)
       @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
       truck = @manifest_report.truck
       if truck
@@ -30,8 +40,8 @@ class ManifestReportsController < ApplicationController
         # @manifest_report.company = truck.company
       end
       if @manifest_report.save
-        flash[:success] = "Report created successfully."
-        redirect_to :back
+        flash[:success] = "Load added"
+        redirect_to user_daily_report_manifest_reports_path(current_user, @daily_report)
       else
         flash[:error] = @manifest_report.errors.full_messages.to_sentence
         redirect_to :back
@@ -40,6 +50,7 @@ class ManifestReportsController < ApplicationController
   end
 
   def edit
+    @daily_report = DailyReport.find(params[:daily_report_id])
     @user = User.find(params[:user_id])
     @companies = Company.all
     @manifest_report = ManifestReport.find(params[:id])
@@ -48,13 +59,14 @@ class ManifestReportsController < ApplicationController
 
   def update
     @manifest_report = ManifestReport.find(params[:id])
+    @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
     @manifest_report.update_attributes(manifest_report_params)
     if @manifest_report.errors.any?
       flash[:error] = @manifest_report.errors.full_messages.to_sentence
       render 'edit'
     else
-      flash[:success] = "Report updated successfully."
-      redirect_to root_path
+      flash[:success] = "Load updated"
+      redirect_to user_daily_report_manifest_reports_path(current_user, params[:daily_report_id])
     end
   end
 
@@ -68,7 +80,8 @@ class ManifestReportsController < ApplicationController
 
     start_date = "#{s_y}-#{s_m}-#{s_d}"
     end_date = "#{e_y}-#{e_m}-#{e_d}"
-    @reports = ManifestReport.where('date >= ?', Date.parse(start_date)).where('date <= ?', Date.parse(end_date)).where('project_name = ?', params[:project_name])
+    @reports = ManifestReport.joins(:daily_report).where('daily_reports.date >= ?', Date.parse(start_date)).where('daily_reports.date <= ?', Date.parse(end_date)).where('daily_reports.project_name = ?', params[:project_name])
+    # @reports = ManifestReport.where('date >= ?', Date.parse(start_date)).where('date <= ?', Date.parse(end_date)).where('project_name = ?', params[:project_name])
     respond_to do |format|
       format.xlsx {render xlsx: 'export', filename: "#{Date.today.to_s}.xlsx"}
     end
@@ -78,20 +91,14 @@ class ManifestReportsController < ApplicationController
 
     def manifest_report_params
       params.require(:manifest_report).permit(
-        :project_name,
-        :user_id,
         :truck_id,
-        :facility_id,
-        :project_id,
         :time_in,
         :time_out,
         :manifest_number,
         :cell,
-        :facility_name,
         :plate,
         :truck_number,
         :company,
-        :date
       )
     end
 end
