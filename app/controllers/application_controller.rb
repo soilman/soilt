@@ -12,6 +12,15 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
+  def admin?
+    if current_user.admin
+      true
+    else
+      flash[:error] = "Permission denied"
+      redirect_to root_path
+    end
+  end
+
   private
     def after_sign_out_path_for(resource_or_scope)
       new_user_session_path

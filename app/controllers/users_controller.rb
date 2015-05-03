@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
 
-  # def show
-  #   sign_out :user
-  #   redirect_to new_user_session_path
-  # end
+  def index
+    @users = User.all
+  end
+
+  def all_reports
+    @users = User.all
+  end
+
+
+
 end

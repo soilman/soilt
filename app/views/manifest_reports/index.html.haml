@@ -9,6 +9,9 @@
         .h4
           %i.fa.fa-globe
             = "#{@daily_report.project.name} | #{@daily_report.date}"
+        - if current_user.admin?
+          .h5
+            = User.find(@daily_report.user_id).email
       .panel-body
         .manifest-reports-table
           .table-responsive.less-width

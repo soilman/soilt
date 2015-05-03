@@ -1,0 +1,21 @@
+.panel.panel-info
+  .panel-heading
+    .h4
+      %i.fa.fa-tasks
+        = "All accounts"
+  .panel-body
+    .table-responsive.less-width
+      %table.myTable.table.table-striped.tablesorter{ id: "users" }
+        %thead
+          %tr
+            %th
+              Email
+            %th
+              Admin?
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td
+                = link_to user.email, edit_user_registration_path(email: user.email)
+              %td
+                = user.admin ? "Yes" : "No"

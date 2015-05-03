@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  # devise_for :users
+  devise_for :users, :controllers => { :registrations => 'admin' }
 
   root 'home#index'
   get '/search' => 'trucks#search', as: :searches
@@ -8,6 +9,8 @@ Rails.application.routes.draw do
   resources :companies do
     resources :trucks, only: [:show]
   end
+
+  get '/all_reports' => 'users#all_reports', as: :all_reports
 
   get '/trucks' => 'trucks#index'
   get '/trucks/new' => 'trucks#new', as: :new_truck
