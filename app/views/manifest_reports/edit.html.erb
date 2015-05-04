@@ -1,32 +1,40 @@
-<%= form_for @manifest_report, url: user_daily_report_manifest_report_path(@user, @daily_report, @manifest_report), method: 'patch' do |f| %>
+<div class="ml-20">
+  <h4>
+    Edit load
+  </h4>
+  <br>
 
-  <p>
-    <%= f.label(:time_in) %>
-    <%= f.time_select(:time_in, { default: @manifest_report.time_in, ampm: true, :ignore_date => true, class: "datetime-select" }) %>
-  </p>
-  <p>
-    <%= f.label(:time_out) %>
-    <%= f.time_select(:time_out, { default: @manifest_report.time_out, ampm: true, :ignore_date => true, class: "datetime-select" }) %>
-  </p>
-  <p>
-    <%= f.label(:manifest_number) %>
-    <% manifest_number =  @manifest_report.manifest_number%>
-    <%= f.text_field(:manifest_number, value: manifest_number )%>
-  </p>
-  <p>
-    <%= f.label(:plate, "Plate Number") %>
-    <%= f.text_field(:plate, value: @manifest_report.plate)%>
-  </p>
-  <p>
-    <%= f.label(:cell) %>
-    <%= f.text_field(:cell, value: @manifest_report.cell)%>
-  </p>
-  <p>
-    <%= f.label(:facility_name) %>
-    <%= f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @manifest_report.facility.name, :id_element => '#facility_id'%>
-  </p>
-  <%= f.hidden_field :truck_id, {id: 'truck_id'} %>
-  <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
-  <%= f.submit 'Update Load', :class => 'btn btn-cta btn-cta-tertiary' %>
-<% end %>
+  <div class="ui-front">
+    <%= form_for @manifest_report, url: user_daily_report_manifest_report_path(@user, @daily_report, @manifest_report), method: 'patch' do |f| %>
 
+      <p>
+        <%= f.label(:time_in) %>
+        <%= f.time_select(:time_in, { default: @manifest_report.time_in, ampm: true, :ignore_date => true, class: "datetime-select" }) %>
+      </p>
+      <p>
+        <%= f.label(:time_out) %>
+        <%= f.time_select(:time_out, { default: @manifest_report.time_out, ampm: true, :ignore_date => true, class: "datetime-select" }) %>
+      </p>
+      <p>
+        <%= f.label(:manifest_number) %>
+        <% manifest_number =  @manifest_report.manifest_number%>
+        <%= f.text_field(:manifest_number, value: manifest_number )%>
+      </p>
+      <p>
+        <%= f.label(:plate, "Plate Number") %>
+        <%= f.autocomplete_field(:plate, autocomplete_truck_plate_manifest_reports_path, value: @manifest_report.plate, :id_element => '#truck_id', class: "plate-field", :append_to => ".plate-field")%>
+      </p>
+      <p>
+        <%= f.label(:cell) %>
+        <%= f.text_field(:cell, value: @manifest_report.cell)%>
+      </p>
+      <p>
+        <%= f.label(:facility_name) %>
+        <%= f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @manifest_report.facility.name, :id_element => '#facility_id'%>
+      </p>
+      <%= f.hidden_field :truck_id, {id: 'truck_id'} %>
+      <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
+      <%= f.submit 'Update Load', :class => 'btn btn-cta btn-primary' %>
+    <% end %>
+  </div>
+</div>

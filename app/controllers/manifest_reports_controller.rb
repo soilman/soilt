@@ -1,7 +1,7 @@
 class ManifestReportsController < ApplicationController
-  autocomplete :truck, :plate
-  autocomplete :facility, :name
-  autocomplete :project, :name
+  autocomplete :truck, :plate, :limit => 3
+  autocomplete :facility, :name, :limit => 3
+  autocomplete :project, :name, :limit => 3
   before_action :authenticate_user!
 
   def new
@@ -26,14 +26,17 @@ class ManifestReportsController < ApplicationController
         daily_report_id: params[:daily_report_id],
         plate: params[:manifest_report][:plate],
         facility_name: params[:manifest_report][:facility_name],
-        cell: params[:manifest_report][:cell]
+        cell: params[:manifest_report][:cell],
+        manifest_number: params[:manifest_report][:manifest_number]
         )
     else
       @daily_report = DailyReport.find(params[:daily_report_id])
       @user = current_user
       @manifest_report = @daily_report.manifest_reports.build(manifest_report_params)
-      @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
-      truck = @manifest_report.truck
+      truck = Truck.where(plate: params[:manifest_report][:plate]).first
+      facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
+      @manifest_report.truck_id = truck.id
+      @manifest_report.facility_id = facility.id
       if truck
         @manifest_report.plate = truck.plate
         @manifest_report.truck_number = truck.number
