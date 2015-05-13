@@ -5,7 +5,7 @@
   <br>
 
   <div class="ui-front">
-    <%= form_for @manifest_report, url: user_daily_report_manifest_report_path(@user, @daily_report, @manifest_report), method: 'patch' do |f| %>
+    <%= form_for @manifest_report, url: user_daily_report_manifest_report_path(@user || params[:user_id], @daily_report || params[:daily_report_id], @manifest_report), method: 'patch' do |f| %>
 
       <p>
         <%= f.label(:time_in) %>

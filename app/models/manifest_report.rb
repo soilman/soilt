@@ -9,9 +9,17 @@ class ManifestReport < ActiveRecord::Base
   accepts_nested_attributes_for :facility
 
   validates_presence_of :time_in, :time_out, :manifest_number, :cell, :plate, :truck, :facility
-  validates_uniqueness_of :manifest_number
+  validate :manifest_number_uniqueness, :on => :create
 
   acts_as_xlsx
+
+  private
+    def manifest_number_uniqueness
+      if self.daily_report.manifest_reports.pluck(:manifest_number).include?(self.manifest_number)
+        errors.add(:manifest_number, "has already been taken")
+      end
+    end
+
 
   # to validate the associated record, you can add a method like this:
   #     validate_associated_record_for_author
