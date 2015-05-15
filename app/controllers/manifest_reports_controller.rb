@@ -20,11 +20,11 @@ class ManifestReportsController < ApplicationController
   end
 
   def create
-    unless Truck.where(:plate => params[:manifest_report][:plate]).any?
+    unless Truck.where(:plate => params[:manifest_report][:plate].upcase).any?
       flash[:error] = "Couldn't find truck with that plate. Create it now"
       redirect_to new_truck_path(
         daily_report_id: params[:daily_report_id],
-        plate: params[:manifest_report][:plate],
+        plate: params[:manifest_report][:plate].upcase,
         facility_name: params[:manifest_report][:facility_name],
         cell: params[:manifest_report][:cell],
         manifest_number: params[:manifest_report][:manifest_number]
@@ -33,7 +33,7 @@ class ManifestReportsController < ApplicationController
       @daily_report = DailyReport.find(params[:daily_report_id])
       @user = current_user
       @manifest_report = @daily_report.manifest_reports.build(manifest_report_params)
-      truck = Truck.where(plate: params[:manifest_report][:plate]).first
+      truck = Truck.where(plate: params[:manifest_report][:plate].upcase).first
       facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
       @manifest_report.truck_id = truck.id
       @manifest_report.facility_id = facility.id
