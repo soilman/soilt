@@ -97,6 +97,11 @@ a.dropdown-toggle {
   position: fixed !important;
 }
 
+
+#daily_report_date_2i {
+  max-width: 30%;
+}
+
 .ml-20 {
   margin-left: 20px;
 }
