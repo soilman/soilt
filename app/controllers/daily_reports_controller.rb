@@ -1,7 +1,8 @@
 class DailyReportsController < ApplicationController
 
   def index
-    @daily_reports = current_user.daily_reports
+    address, no_addr = current_user.daily_reports.partition { |r| r.project_name.split(' ').first.to_i > 0 }
+    @daily_reports = [address.sort_by { |r| r.project_name.split(' ').first.to_i }, no_addr.sort_by(&:project_name)].flatten
 
     unless @daily_reports.any?
       flash[:warning] = "You don't have any reports"
