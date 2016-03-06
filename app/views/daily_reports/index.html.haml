@@ -1,23 +1,19 @@
-.panel.panel-info
-  .panel-heading
-    .h4
-      %i.fa.fa-laptop
-        = "Reports | #{current_user.email}"
-  .panel-body
-    - if @daily_reports.any?
+- @daily_reports.group_by(&:project_name).each do |project_name, reports|
+  .panel.panel-info
+    .panel-heading
+      .h4
+        %i.fa.fa-laptop
+          = "Reports | #{project_name}"
+    .panel-body
       .table-responsive.less-width
         %table.myTable.table.table-striped.tablesorter{ id: "daily_reports" }
           %thead
             %tr
               %th
-                Project Name
-              %th
                 Date
           %tbody
-            - @daily_reports.each do |report|
+            - reports.each do |report|
               %tr
-                %td
-                  = report.project_name
                 %td
                   = link_to report.date, user_daily_report_manifest_reports_path(current_user, report)
 

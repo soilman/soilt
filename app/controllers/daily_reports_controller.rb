@@ -2,6 +2,11 @@ class DailyReportsController < ApplicationController
 
   def index
     @daily_reports = current_user.daily_reports
+
+    unless @daily_reports.any?
+      flash[:warning] = "You don't have any reports"
+      redirect_to :back
+    end
   end
 
   def new
