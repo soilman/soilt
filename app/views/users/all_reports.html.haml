@@ -1,22 +1,22 @@
-- @users.select{ |u| u.daily_reports.any? }.each do |user|
+- @projects.select{ |p| p.daily_reports.any? }.each do |proj|
   .panel.panel-info
     .panel-heading
       .h4
         %i.fa.fa-laptop
-          = "Reports | #{user.email}"
+          = "Reports | #{proj.name}"
     .panel-body
       .table-responsive.less-width
         %table.myTable.table.table-striped.tablesorter{ id: "daily_reports" }
           %thead
             %tr
               %th
-                Project Name
-              %th
                 Date
+              %th
+                User
           %tbody
-            - user.daily_reports.each do |report|
+            - proj.daily_reports.each do |report|
               %tr
                 %td
-                  = report.project_name
-                %td
                   = link_to report.date, user_daily_report_manifest_reports_path(report.user_id, report)
+                %td
+                  = @user_emails[report.user_id]
