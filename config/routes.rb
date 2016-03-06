@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   get 'manifest_reports/export' => 'manifest_reports#export', as: :export_manifest_report
   post 'manifest_reports/export' => 'manifest_reports#export', as: :load_manifest_report
+  get 'manifest_reports/destroy' => 'manifest_reports#destroy', as: :delete_manifest_report
 
   resources :users do
     resources :daily_reports do

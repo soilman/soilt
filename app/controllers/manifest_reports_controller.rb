@@ -90,6 +90,17 @@ class ManifestReportsController < ApplicationController
     end
   end
 
+  def destroy
+    report = current_user.manifest_reports.where('manifest_reports.id = ?', params[:manifest_report_id]).first
+
+    unless report.try(:destroy)
+      flash[:error] = "Error deleting load with id #{params[:manifest_report_id]}"
+    else
+      flash[:success] = "Load deleted"
+    end
+    redirect_to :back
+  end
+
   private
 
     def manifest_report_params

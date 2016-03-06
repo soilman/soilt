@@ -34,6 +34,8 @@
                     Truck Number
                   %th
                     Destination
+                  %th
+                    Delete
               %tbody
                 - @manifest_reports.each do |report|
                   %tr
@@ -53,4 +55,10 @@
                       = report.truck_number
                     %td
                       = report.facility.name
+                    %td
+                      = link_to delete_manifest_report_path(manifest_report_id: report.id), :data => {:confirm => "Are you sure?"} do
+                        %button.btn.btn-danger.pull-right
+                          X
+
+=# form_tag user_daily_report_manifest_report_path(params['user_id'], params['daily_report_id'], 1), :method => :delete, :role => "form", :class => "form-horizontal" do
 

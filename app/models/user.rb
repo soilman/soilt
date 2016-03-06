@@ -4,6 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :trackable, :validatable#, :rememberable
   has_many :daily_reports
-  has_many :manifest_reports, through: :manifest_reports
+  has_many :manifest_reports, through: :daily_reports
   has_many :permissions
 end
