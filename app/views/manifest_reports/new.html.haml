@@ -25,6 +25,9 @@
           = f.label(:facility_name)
           = f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: params[:facility_name] || @last_facility, :id_element => '#facility_id'
         .form-group
+          = f.label(:comment)
+          = f.text_area :comment, value: params[:comment]
+        .form-group
           = f.hidden_field(:facility_id, {id: 'facility_id'})
           = f.hidden_field :truck_id, {id: 'truck_id'}
           = f.submit "Submit", :class => "btn btn-primary report-submit"

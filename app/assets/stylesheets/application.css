@@ -113,6 +113,12 @@ input, label, select {
 input {
   height: 32px;
 }
+
+#manifest_report_comment {
+  width: 375px;
+  height: 75px;
+
+}
 /*.ui-menu {
   z-index: 200, !important;
 }

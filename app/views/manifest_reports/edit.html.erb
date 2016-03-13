@@ -32,6 +32,10 @@
         <%= f.label(:facility_name) %>
         <%= f.autocomplete_field :facility_name, autocomplete_facility_name_manifest_reports_path, value: @manifest_report.facility.name, :id_element => '#facility_id'%>
       </p>
+      <p>
+        <%= f.label(:comment) %>
+        <%= f.text_area :comment, value: @manifest_report.comment %>
+      </p>
       <%= f.hidden_field :truck_id, {id: 'truck_id'} %>
       <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
       <%= f.submit 'Update Load', :class => 'btn btn-cta btn-primary' %>

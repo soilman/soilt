@@ -27,7 +27,8 @@ class ManifestReportsController < ApplicationController
         plate: params[:manifest_report][:plate].upcase,
         facility_name: params[:manifest_report][:facility_name],
         cell: params[:manifest_report][:cell],
-        manifest_number: params[:manifest_report][:manifest_number]
+        manifest_number: params[:manifest_report][:manifest_number],
+        comment: params[:manifest_report][:comment]
         )
     else
       @daily_report = DailyReport.find(params[:daily_report_id])
@@ -113,6 +114,7 @@ class ManifestReportsController < ApplicationController
         :plate,
         :truck_number,
         :company,
+        :comment
       )
     end
 end
