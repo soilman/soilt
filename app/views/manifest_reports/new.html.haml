@@ -1,7 +1,7 @@
 - if current_user
   .ml-20
     %h3
-      Create load
+      = "Create Load ##{@daily_report.manifest_reports.count + 1}"
     %br
     .ui-front
       = form_for(ManifestReport.new, url: user_daily_report_manifest_reports_path(current_user, @daily_report), :html => {class: "manifest-form"}) do |f|

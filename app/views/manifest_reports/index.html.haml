@@ -19,6 +19,8 @@
               %thead
                 %tr
                   %th
+                    Load #
+                  %th
                     Time In
                   %th
                     Time Out
@@ -39,6 +41,8 @@
               %tbody
                 - @manifest_reports.each do |report|
                   %tr
+                    %td
+                      = @manifest_reports.index(report) + 1
                     %td
                       = report.time_in.strftime("%I:%M%p")
                     %td
