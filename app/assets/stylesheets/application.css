@@ -128,6 +128,10 @@ input {
   height: 30px;
   width: 115px;
 }
+
+.final-load-checkbox {
+  height: 16px !important;
+}
 /*.ui-menu {
   z-index: 200, !important;
 }

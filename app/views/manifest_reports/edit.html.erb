@@ -36,6 +36,10 @@
         <%= f.label(:comment) %>
         <%= f.text_area :comment, value: @manifest_report.comment %>
       </p>
+      <p>
+        <%= f.label(:final_load, "Final load?") %>
+        <%= f.check_box :final_load, value: @manifest_report.final_load, class: "final-load-checkbox" %>
+      </p>
       <%= f.hidden_field :truck_id, {id: 'truck_id'} %>
       <%= f.hidden_field(:facility_id, {id: 'facility_id'}) %>
       <%= f.submit 'Update Load', :class => 'btn btn-cta btn-primary' %>

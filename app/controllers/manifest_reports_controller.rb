@@ -28,7 +28,8 @@ class ManifestReportsController < ApplicationController
         facility_name: params[:manifest_report][:facility_name],
         cell: params[:manifest_report][:cell],
         manifest_number: params[:manifest_report][:manifest_number],
-        comment: params[:manifest_report][:comment]
+        comment: params[:manifest_report][:comment],
+        final_load: params[:manifest_report][:final_load]
         )
     else
       @daily_report = DailyReport.find(params[:daily_report_id])
@@ -38,12 +39,16 @@ class ManifestReportsController < ApplicationController
       facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
       @manifest_report.truck_id = truck.id
       @manifest_report.facility_id = facility.id
+
       if truck
         @manifest_report.plate = truck.plate
         @manifest_report.truck_number = truck.number
         # @manifest_report.company = truck.company
       end
       if @manifest_report.save
+        if params[:manifest_report][:final_load] == "1"
+          @daily_report.update_attribute(:complete, true)
+        end
         flash[:success] = "Load added"
         redirect_to user_daily_report_manifest_reports_path(current_user, @daily_report)
       else
@@ -65,10 +70,16 @@ class ManifestReportsController < ApplicationController
     @manifest_report = ManifestReport.find(params[:id])
     @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
     @manifest_report.update_attributes(manifest_report_params)
+
     if @manifest_report.errors.any?
       flash[:error] = @manifest_report.errors.full_messages.to_sentence
       render 'edit'
     else
+      if params[:manifest_report][:final_load] == "1"
+        @manifest_report.daily_report.update_attribute(:complete, true)
+      else
+        @manifest_report.daily_report.update_attribute(:complete, false)
+      end
       flash[:success] = "Load updated"
       redirect_to user_daily_report_manifest_reports_path(current_user, params[:daily_report_id])
     end
@@ -114,7 +125,8 @@ class ManifestReportsController < ApplicationController
         :plate,
         :truck_number,
         :company,
-        :comment
+        :comment,
+        :final_load
       )
     end
 end
