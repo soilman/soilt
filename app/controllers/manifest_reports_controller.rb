@@ -16,7 +16,7 @@ class ManifestReportsController < ApplicationController
   def index
     @user = current_user
     @daily_report = DailyReport.find(params[:daily_report_id])
-    @manifest_reports = @daily_report.manifest_reports
+    @manifest_reports = @daily_report.manifest_reports.sort_by(&:created_at)
   end
 
   def create
@@ -48,6 +48,9 @@ class ManifestReportsController < ApplicationController
       if @manifest_report.save
         if params[:manifest_report][:final_load] == "1"
           @daily_report.update_attribute(:complete, true)
+          @manifest_report.daily_report.manifest_reports.where('id != ?', @manifest_report.id).where(final_load: true).each do |mr|
+          mr.update_attribute(:final_load, false)
+        end
         end
         flash[:success] = "Load added"
         redirect_to user_daily_report_manifest_reports_path(current_user, @daily_report)
@@ -77,6 +80,9 @@ class ManifestReportsController < ApplicationController
     else
       if params[:manifest_report][:final_load] == "1"
         @manifest_report.daily_report.update_attribute(:complete, true)
+        @manifest_report.daily_report.manifest_reports.where('id != ?', @manifest_report.id).where(final_load: true).each do |mr|
+          mr.update_attribute(:final_load, false)
+        end
       else
         @manifest_report.daily_report.update_attribute(:complete, false)
       end
