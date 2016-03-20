@@ -44,6 +44,20 @@ $( document ).ready(function() {
   $('#export_button').on('click', function(e) {
     $('#export_modal').modal('hide');
   });
+
+  var originalButtonText = $('.job-complete-button').val();
+
+  $('.job-complete-button').hover(function() {
+    $(this).val("Toggle Status");
+    $(this).addClass("grey-button");
+  });
+
+  $('.job-complete-button').mouseleave(function() {
+    if ( !$(this).is(":focus") ) {
+      $(this).val(originalButtonText);
+      $(this).removeClass("grey-button");
+    }
+  });
 });
 
 // $(document).ready(function() {

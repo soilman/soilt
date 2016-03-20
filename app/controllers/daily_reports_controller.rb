@@ -44,7 +44,7 @@ class DailyReportsController < ApplicationController
       if !@daily_report.complete
         @daily_report.manifest_reports.where(final_load: true).each { |mr| mr.update_attribute(:final_load, false) }
       end
-      flash[:success] = "Report updated successfully."
+      flash[:success] = "Job status updated"
     else
       flash[:error] = @daily_report.errors.full_messages.to_sentence
     end

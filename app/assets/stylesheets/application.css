@@ -101,7 +101,12 @@ a.dropdown-toggle {
 #daily_report_date_2i {
   max-width: 30%;
 }
-
+.ml-5 {
+  margin-left: 5px;
+}
+.ml-15 {
+  margin-left: 15px;
+}
 .ml-20 {
   margin-left: 20px;
 }
@@ -131,6 +136,11 @@ input {
 
 .final-load-checkbox {
   height: 16px !important;
+}
+
+.grey-button{
+  border-color: grey !important;
+  background-color: grey !important;
 }
 /*.ui-menu {
   z-index: 200, !important;
