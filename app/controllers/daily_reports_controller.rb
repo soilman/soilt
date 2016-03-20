@@ -35,15 +35,17 @@ class DailyReportsController < ApplicationController
 
   def update
     @daily_report = DailyReport.find(params[:id])
-    @daily_report.date = params[:daily_report][:date]
-    @daily_report.project = Project.where(name: params[:daily_report][:project_name]).first_or_create
-    if @daily_report.save
+    # @daily_report.date = params[:daily_report][:date] if params[:daily_report][:date]
+    # @daily_report.project = Project.where(name: params[:daily_report][:project_name]).first_or_create if params[:daily_report][:project_name]
+
+    @daily_report.complete = params[:complete] == "true" ? true : false
+
+    if @daily_report.save!
       flash[:success] = "Report updated successfully."
-      redirect_to root_path
     else
       flash[:error] = @daily_report.errors.full_messages.to_sentence
-      render 'edit'
     end
+    redirect_to :back
   end
 
   private
@@ -51,7 +53,8 @@ class DailyReportsController < ApplicationController
     def daily_report_params
       params.require(:daily_report).permit(
         :project_name,
-        :date
+        :date,
+        :complete
       )
     end
 end

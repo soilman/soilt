@@ -120,6 +120,14 @@ input {
 
 }
 
+.bold-text {
+  font-weight: bold;
+}
+
+.job-complete-button {
+  height: 30px;
+  width: 115px;
+}
 /*.ui-menu {
   z-index: 200, !important;
 }

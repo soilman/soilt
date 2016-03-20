@@ -9,6 +9,15 @@
         .h4
           %i.fa.fa-globe
             = "#{@daily_report.project.name} | #{@daily_report.date}"
+        .bold-text.pull-right
+          = "#{@manifest_reports.count} Loads"
+        %br
+        .status-button-container
+          - button_class = @daily_report.complete ? "btn-success" : "btn-warning"
+          - button_text = @daily_report.complete ? "Job Complete" : "Job Active"
+          = form_tag user_daily_report_path(params[:user_id], params[:daily_report_id]), method: 'patch' do
+            = hidden_field_tag :complete, !@daily_report.complete
+            = submit_tag button_text, class: "btn pull-right job-complete-button #{button_class}"
         - if current_user.admin?
           .h5
             = User.find(@daily_report.user_id).email
@@ -41,7 +50,7 @@
               %tbody
                 - @manifest_reports.each do |report|
                   %tr
-                    %td
+                    %td.bold-text
                       = @manifest_reports.index(report) + 1
                     %td
                       = report.time_in.strftime("%I:%M%p")
