@@ -6,7 +6,13 @@ class ManifestReportsController < ApplicationController
 
   def new
     @user = current_user
-    @manifest_report = ManifestReport.new
+
+    if params[:manifest_report_id]
+      @manifest_report_params = ManifestReport.where(id: params[:manifest_report_id]).first.slice(:plate, :facility_name, :cell)
+    else
+      @manifest_report_params = {}
+    end
+
     @daily_report = DailyReport.find(params[:daily_report_id])
     if @daily_report.manifest_reports.any?
       @last_facility = @daily_report.manifest_reports.last.facility.name

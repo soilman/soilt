@@ -73,7 +73,7 @@
                     %td
                       = report.facility.name
                     %td
-                      = link_to delete_manifest_report_path(manifest_report_id: report.id), :data => {:confirm => "Are you sure?"} do
+                      = link_to new_user_daily_report_manifest_report_path(manifest_report_id: report.id) do
                         %button.btn.btn-primary.ml-15
                           +
                     %td
