@@ -20,7 +20,8 @@ class TrucksController < ApplicationController
           cell: params[:truck][:cell],
           facility_name: params[:truck][:facility_name],
           manifest_number: params[:truck][:manifest_number],
-          comment: params[:truck][:comment]
+          comment: params[:truck][:comment],
+          final_load: params[:truck][:final_load]
         )
       else
         redirect_to companies_path
