@@ -9,7 +9,7 @@
         .col-md-10
           .h4
             %i.fa.fa-globe
-              = "#{@daily_report.project.name} | #{@daily_report.date}"
+              = "#{@daily_report.project.try(:name)} | #{@daily_report.date}"
           - if current_user.admin?
             .h5
               = User.find(@daily_report.user_id).email
@@ -67,11 +67,11 @@
                     %td
                       = report.cell
                     %td
-                      = report.company.name
+                      = report.company.try(:name)
                     %td
                       = report.truck_number
                     %td
-                      = report.facility.name
+                      = report.facility.try(:name)
                     %td
                       = link_to new_user_daily_report_manifest_report_path(manifest_report_id: report.id) do
                         %button.btn.btn-primary.ml-15
