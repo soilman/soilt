@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   end
 
   def all_reports
-    @users = User.all
+    @projects = Project.all
+    @user_emails = User.all.inject({}) { |memo, user| memo.merge(user.id => user.email) }
   end
 
 

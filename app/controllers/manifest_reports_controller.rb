@@ -6,7 +6,13 @@ class ManifestReportsController < ApplicationController
 
   def new
     @user = current_user
-    @manifest_report = ManifestReport.new
+
+    if params[:manifest_report_id]
+      @manifest_report_params = ManifestReport.where(id: params[:manifest_report_id]).first.slice(:plate, :facility_name, :cell)
+    else
+      @manifest_report_params = {}
+    end
+
     @daily_report = DailyReport.find(params[:daily_report_id])
     if @daily_report.manifest_reports.any?
       @last_facility = @daily_report.manifest_reports.last.facility.name
@@ -16,7 +22,7 @@ class ManifestReportsController < ApplicationController
   def index
     @user = current_user
     @daily_report = DailyReport.find(params[:daily_report_id])
-    @manifest_reports = @daily_report.manifest_reports
+    @manifest_reports = @daily_report.manifest_reports.sort_by(&:created_at)
   end
 
   def create
@@ -27,7 +33,9 @@ class ManifestReportsController < ApplicationController
         plate: params[:manifest_report][:plate].upcase,
         facility_name: params[:manifest_report][:facility_name],
         cell: params[:manifest_report][:cell],
-        manifest_number: params[:manifest_report][:manifest_number]
+        manifest_number: params[:manifest_report][:manifest_number],
+        comment: params[:manifest_report][:comment],
+        final_load: params[:manifest_report][:final_load]
         )
     else
       @daily_report = DailyReport.find(params[:daily_report_id])
@@ -37,12 +45,19 @@ class ManifestReportsController < ApplicationController
       facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
       @manifest_report.truck_id = truck.id
       @manifest_report.facility_id = facility.id
+
       if truck
         @manifest_report.plate = truck.plate
         @manifest_report.truck_number = truck.number
         # @manifest_report.company = truck.company
       end
       if @manifest_report.save
+        if params[:manifest_report][:final_load] == "1"
+          @daily_report.update_attribute(:complete, true)
+          @manifest_report.daily_report.manifest_reports.where('id != ?', @manifest_report.id).where(final_load: true).each do |mr|
+          mr.update_attribute(:final_load, false)
+        end
+        end
         flash[:success] = "Load added"
         redirect_to user_daily_report_manifest_reports_path(current_user, @daily_report)
       else
@@ -63,11 +78,21 @@ class ManifestReportsController < ApplicationController
   def update
     @manifest_report = ManifestReport.find(params[:id])
     @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
+    was_final_load = @manifest_report.final_load?
     @manifest_report.update_attributes(manifest_report_params)
+
     if @manifest_report.errors.any?
       flash[:error] = @manifest_report.errors.full_messages.to_sentence
       render 'edit'
     else
+      if @manifest_report.final_load?
+        @manifest_report.daily_report.update_attribute(:complete, true)
+        @manifest_report.daily_report.manifest_reports.where('id != ?', @manifest_report.id).where(final_load: true).each do |mr|
+          mr.update_attribute(:final_load, false)
+        end
+      else
+        @manifest_report.daily_report.update_attribute(:complete, false) if was_final_load
+      end
       flash[:success] = "Load updated"
       redirect_to user_daily_report_manifest_reports_path(current_user, params[:daily_report_id])
     end
@@ -90,6 +115,18 @@ class ManifestReportsController < ApplicationController
     end
   end
 
+  def destroy
+    report = ManifestReport.find(params[:manifest_report_id])
+
+    unless report.try(:destroy)
+      flash[:error] = "Error deleting load with id #{params[:manifest_report_id]}"
+    else
+      flash[:success] = "Load deleted"
+      report.daily_report.update_attribute(:complete, false) if report.final_load?
+    end
+    redirect_to :back
+  end
+
   private
 
     def manifest_report_params
@@ -102,6 +139,8 @@ class ManifestReportsController < ApplicationController
         :plate,
         :truck_number,
         :company,
+        :comment,
+        :final_load
       )
     end
 end

@@ -5,19 +5,32 @@
 
   - if @manifest_reports.any?
     .panel.panel-info
-      .panel-heading
-        .h4
-          %i.fa.fa-globe
-            = "#{@daily_report.project.name} | #{@daily_report.date}"
-        - if current_user.admin?
-          .h5
-            = User.find(@daily_report.user_id).email
+      .panel-heading.clearfix
+        .col-md-10
+          .h4
+            %i.fa.fa-globe
+              = "#{@daily_report.project.try(:name)} | #{@daily_report.date}"
+          - if current_user.admin?
+            .h5
+              = User.find(@daily_report.user_id).email
+        .col-md-2
+          .h4.bold-text.pull-right
+            = "#{@manifest_reports.count} Loads"
+          %br
+          .status-button-container
+            - button_class = @daily_report.complete ? "btn-success" : "btn-warning"
+            - button_text = @daily_report.complete ? "Job Complete" : "Job Active"
+            = form_tag user_daily_report_path(params[:user_id], params[:daily_report_id]), method: 'patch' do
+              = hidden_field_tag :complete, !@daily_report.complete
+              = submit_tag button_text, class: "btn pull-right job-complete-button #{button_class}"
       .panel-body
         .manifest-reports-table
           .table-responsive.less-width
             %table.myTable.table.table-striped.tablesorter{ id: "projects" }
               %thead
                 %tr
+                  %th
+                    Load #
                   %th
                     Time In
                   %th
@@ -34,9 +47,15 @@
                     Truck Number
                   %th
                     Destination
+                  %th
+                    Duplicate
+                  %th
+                    Delete
               %tbody
                 - @manifest_reports.each do |report|
                   %tr
+                    %td.bold-text
+                      = @manifest_reports.index(report) + 1
                     %td
                       = report.time_in.strftime("%I:%M%p")
                     %td
@@ -48,9 +67,19 @@
                     %td
                       = report.cell
                     %td
-                      = report.company.name
+                      = report.company.try(:name)
                     %td
                       = report.truck_number
                     %td
-                      = report.facility.name
+                      = report.facility.try(:name)
+                    %td
+                      = link_to new_user_daily_report_manifest_report_path(manifest_report_id: report.id) do
+                        %button.btn.btn-primary.ml-15
+                          +
+                    %td
+                      = link_to delete_manifest_report_path(manifest_report_id: report.id), :data => {:confirm => "Are you sure?"} do
+                        %button.btn.btn-danger.ml-5
+                          X
+
+=# form_tag user_daily_report_manifest_report_path(params['user_id'], params['daily_report_id'], 1), :method => :delete, :role => "form", :class => "form-horizontal" do
 

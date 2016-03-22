@@ -27,6 +27,7 @@
 
 body {
   padding-top: 70px;
+  font-family: sans-serif !important;
 }
 
 .search-query {
@@ -101,11 +102,52 @@ a.dropdown-toggle {
 #daily_report_date_2i {
   max-width: 30%;
 }
-
+.ml-5 {
+  margin-left: 5px;
+}
+.ml-15 {
+  margin-left: 15px;
+}
 .ml-20 {
   margin-left: 20px;
 }
 
+input, label, select {
+  font-size: 18px;
+}
+
+input {
+  height: 32px;
+}
+
+#manifest_report_comment {
+  width: 375px;
+  height: 75px;
+
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.job-complete-button {
+  height: 30px;
+  width: 115px;
+}
+
+.final-load-checkbox {
+  height: 16px !important;
+}
+
+.btn-success-impt {
+  background-color: #5cb85c !important;
+  border-color: #4cae4c !important;
+}
+
+.btn-warning-impt {
+  background-color: #f0ad4e !important;
+  border-color: #eea236 !important;
+}
 /*.ui-menu {
   z-index: 200, !important;
 }

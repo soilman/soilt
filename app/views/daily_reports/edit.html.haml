@@ -1,6 +1,6 @@
 - if current_user
   .ml-20
-    %h4
+    %h3
       Edit report
     %br
     = form_for(@daily_report, url: user_daily_report_path(@user), method: 'patch') do |f|

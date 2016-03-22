@@ -44,6 +44,25 @@ $( document ).ready(function() {
   $('#export_button').on('click', function(e) {
     $('#export_modal').modal('hide');
   });
+
+  var originalButtonText = $('.job-complete-button').val();
+
+  $('.job-complete-button').hover(function() {
+    if (originalButtonText === "Job Active") {
+      $(this).val("Complete Job");
+      $(this).addClass("btn-success-impt");
+    } else {
+      $(this).val("Open Job");
+      $(this).addClass("btn-warning-impt");
+    }
+  });
+
+  $('.job-complete-button').mouseleave(function() {
+    if (!$(this).is(":focus")) {
+      $(this).val(originalButtonText);
+      $(this).removeClass("btn-success-impt btn-warning-impt");
+    }
+  });
 });
 
 // $(document).ready(function() {
