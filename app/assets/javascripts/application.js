@@ -48,14 +48,19 @@ $( document ).ready(function() {
   var originalButtonText = $('.job-complete-button').val();
 
   $('.job-complete-button').hover(function() {
-    $(this).val("Toggle Status");
-    $(this).addClass("grey-button");
+    if (originalButtonText === "Job Active") {
+      $(this).val("Complete Job");
+      $(this).addClass("btn-success-impt");
+    } else {
+      $(this).val("Open Job");
+      $(this).addClass("btn-warning-impt");
+    }
   });
 
   $('.job-complete-button').mouseleave(function() {
-    if ( !$(this).is(":focus") ) {
+    if (!$(this).is(":focus")) {
       $(this).val(originalButtonText);
-      $(this).removeClass("grey-button");
+      $(this).removeClass("btn-success-impt btn-warning-impt");
     }
   });
 });
