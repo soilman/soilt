@@ -78,19 +78,20 @@ class ManifestReportsController < ApplicationController
   def update
     @manifest_report = ManifestReport.find(params[:id])
     @manifest_report.facility = Facility.where(name: params[:manifest_report][:facility_name]).first_or_create
+    was_final_load = @manifest_report.final_load?
     @manifest_report.update_attributes(manifest_report_params)
 
     if @manifest_report.errors.any?
       flash[:error] = @manifest_report.errors.full_messages.to_sentence
       render 'edit'
     else
-      if params[:manifest_report][:final_load] == "1"
+      if @manifest_report.final_load?
         @manifest_report.daily_report.update_attribute(:complete, true)
         @manifest_report.daily_report.manifest_reports.where('id != ?', @manifest_report.id).where(final_load: true).each do |mr|
           mr.update_attribute(:final_load, false)
         end
       else
-        @manifest_report.daily_report.update_attribute(:complete, false)
+        @manifest_report.daily_report.update_attribute(:complete, false) if was_final_load
       end
       flash[:success] = "Load updated"
       redirect_to user_daily_report_manifest_reports_path(current_user, params[:daily_report_id])
@@ -115,12 +116,13 @@ class ManifestReportsController < ApplicationController
   end
 
   def destroy
-    report = current_user.manifest_reports.where('manifest_reports.id = ?', params[:manifest_report_id]).first
+    report = ManifestReport.find(params[:manifest_report_id])
 
     unless report.try(:destroy)
       flash[:error] = "Error deleting load with id #{params[:manifest_report_id]}"
     else
       flash[:success] = "Load deleted"
+      report.daily_report.update_attribute(:complete, false) if report.final_load?
     end
     redirect_to :back
   end

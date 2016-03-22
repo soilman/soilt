@@ -18,6 +18,8 @@ class DailyReportsController < ApplicationController
   def create
     @user = current_user
     @daily_report = @user.daily_reports.build(daily_report_params)
+
+    # this should really be in a transaction or something but just rollback if blank project_name........
     @daily_report.project = Project.where(name: params[:daily_report][:project_name]).first_or_create
     if @daily_report.save
       flash[:success] = "Report created successfully."
