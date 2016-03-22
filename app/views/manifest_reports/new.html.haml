@@ -1,3 +1,5 @@
+- now = DateTime.now.utc
+- current_time = now.in_time_zone('Eastern Time (US & Canada)')
 - if current_user
   .ml-20
     %h3
@@ -7,10 +9,10 @@
       = form_for(ManifestReport.new, url: user_daily_report_manifest_reports_path(current_user, @daily_report), :html => {class: "manifest-form"}) do |f|
         .form-group
           = f.label(:time_in)
-          = f.time_select(:time_in, { default: Time.now, ampm: true, :ignore_date => true, class: "datetime-select" })
+          = f.time_select(:time_in, { default: current_time, ampm: true, :ignore_date => true, class: "datetime-select" })
         .form-group
           = f.label(:time_out)
-          = f.time_select(:time_out, { default: Time.now, ampm: true, :ignore_date => true, class: "datetime-select" })
+          = f.time_select(:time_out, { default: current_time, ampm: true, :ignore_date => true, class: "datetime-select" })
         .form-group
           = f.label(:manifest_number)
           - manifest_number =  @daily_report.manifest_reports.size == 0 ? "" : (@daily_report.manifest_reports.last.manifest_number + 1)
