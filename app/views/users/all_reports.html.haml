@@ -14,7 +14,7 @@
               %th
                 User
           %tbody
-            - proj.daily_reports.each do |report|
+            - proj.daily_reports.sort_by(&:date).each do |report|
               %tr
                 %td
                   = link_to report.date, user_daily_report_manifest_reports_path(report.user_id, report)
